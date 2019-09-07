@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <!--parents-->
+    <tr class="app-tr ">
+        <td class="" style="width:20%">
+            <a class="app-span-point" >查看</a>
+        </td>
+    </tr>
+    <!--son-->
+    <tr class="app-tr" style="display:none;">
+        <td colspan="4">
+            <div class="">
+                <div class="">风险描述</div>
+                <p>AndroidManifest.xml配置文件中没有设置allowBackup标志(默认为true)或将allowBackup标志设置为true。当这个标志被设置为true时应用程序数据可以备份和恢复，adb调试备份允许恶意攻击者复制应用程序数据。</p>
+                <p>AndroidManifest.xml 配置文件中中设置为android:allowBackup="false"。</p>
+            </div>
+        </td>
+    </tr>
+    <tr class="app-tr ">
+        <td class="" style="width:20%">
+            <a class="app-span-point" >查看</a>
+        </td>
+    </tr>
+    <tr class="app-tr" style="display:none;">
+        <td colspan="4">
+            <div class="">
+                <div class="">风险描述</div>
+                <p>AndroidManifest.xml配置文件中没有设置allowBackup标志(默认为true)或将allowBackup标志设置为true。当这个标志被设置为true时应用程序数据可以备份和恢复，adb调试备份允许恶意攻击者复制应用程序数据。</p>
+                <p>AndroidManifest.xml 配置文件中中设置为android:allowBackup="false"。</p>
+            </div>
+        </td>
+    </tr>
+</table>
+<script src="./jquery-1.10.2.js"></script>
+<script>
+    $(function () {
+        $('.app-span-point').each(function () {
+            $(this).click(function () {
+                if ($(this).text() == "查看") {
+                    $(this).text("收起");
+                }
+                else
+                    $(this).text("查看");
+                $(this).parents(".app-tr").next(".app-tr").toggle();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
