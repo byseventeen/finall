@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-1 col-sm-10">
-                  <button type="button" class="btn btn-default sub-btn" @click="tijiao()">登录</button>
+                  <button type="button" class="btn btn-default sub-btn" @click="validate()">登录</button>
                 </div>
               </div>
             </form>
@@ -177,11 +177,15 @@
              }
             },
             validate(){
-              var inputCode = document.getElementById("inputcode").value.toUpperCase(); //取得输入的验证码并转化为大写
+              var inputCode = document.getElementById("inputcode").value.toUpperCase();
+              var checkCode = document.getElementById("code").value.substr(1);
+              console.log(inputCode)
+              //取得输入的验证码并转化为大写
               if(inputCode.length <= 0) { //若输入的验证码长度为0
                 alert("请输入验证码！"); //则弹出请输入验证码
               }
-              else if(inputCode != code ) { //若输入的验证码与产生的验证码不一致时
+              else if(inputCode!=(checkCode)) { //若输入的验证码与产生的验证码不一致时
+                console.log(checkCode)
                 alert("验证码输入错误！@_@"); //则弹出验证码输入错误
                 createCode();//刷新验证码
                 document.getElementById("inputcode").value = "";//清空文本框
@@ -189,11 +193,8 @@
               else { //输入正确时
                 alert("Right");
               }
-            },
-            tijiao() {
+
               let config = {
-                //formData  提交请求头有两种 multipart/form-data  和 application/x-www-form-urlencoded
-                // multipart/form-data   用于type=file 的input提交
                 headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
                 }
@@ -202,12 +203,8 @@
               //参数
               formData.append("inputusername",this.inputusername);
               formData.append("inputpassword",this.inputpassword);
-              let data = {
-                username : this.inputusername,
-                pwd : this.inputpassword
-              }
 
-              axios.post("http://localhost:8080/login.action ", data).then(res => {
+              axios.post("http://localhost:8080/login.action ",config,formData).then(res => {
                 console.log(res);
               }).catch(error => {
                 console.log(error);
