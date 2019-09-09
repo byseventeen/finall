@@ -19,6 +19,7 @@
     "jquery": "^3.4.1",
     "mockjs": "^1.0.1-beta3",
     "popper.js": "^1.15.0",
+    "qs": "^6.8.0",
     "viewport-units-buggyfill": "^0.6.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

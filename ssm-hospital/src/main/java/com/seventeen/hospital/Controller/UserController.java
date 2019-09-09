@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
 
 @Controller
 public class UserController {
@@ -72,15 +74,33 @@ public class UserController {
         return "aaa";
     }
 
-
     @CrossOrigin
     @RequestMapping(path = "/login.action",method= RequestMethod.POST)
     @ResponseBody
-    public String login(User user){
-        System.out.println("11111111");
-        userService.delete(2);
-        return "hello";
+    public User login(HttpServletRequest request) {
+        User user=new User();
+        user.setCardId(request.getParameter("inputusername"));
+        user.setPassword(request.getParameter("inputpassword"));
+        List<User> loginMesg=userService.find(user);
+        User rtuser=new User();
+        rtuser.setUsername(loginMesg.get(0).getUsername());
+        rtuser.setCardId(loginMesg.get(0).getCardId());
+        if (loginMesg!=null){
+            return rtuser;
+        }
+        else
+            return null;
     }
+
+
+   /* @CrossOrigin
+    @RequestMapping(path = "/dlogin.action",method= RequestMethod.POST)
+    @ResponseBody
+    public String dlogin(){
+        System.out.println("11111111");
+        System.out.println();
+        return "ok";
+    }*/
 
 
 

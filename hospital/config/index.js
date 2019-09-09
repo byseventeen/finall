@@ -10,7 +10,19 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/login.action':{
+        target:'http://localhost:8080/login.action',
+        changeOrigin:true,
+        pathRewrite:{'^/login.action':''}
+      },
+      '/doctor/dlogin.action':{
+        target:'http://localhost:8080/doctor/dlogin.action',
+        changeOrigin:true,
+        pathRewrite:{'^/doctor/dlogin.action':''}
+      }
+
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

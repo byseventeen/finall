@@ -9,7 +9,8 @@ import "./assets/js/bootstrap.min.js"
 import {get, post} from './assets/js/fetch'
 import axios from 'axios'
 Vue.prototype.$http = axios
-
+import qs from 'qs'
+Vue.prototype.$qs = qs
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

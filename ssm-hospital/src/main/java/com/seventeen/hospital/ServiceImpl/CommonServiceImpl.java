@@ -16,7 +16,6 @@ public abstract class CommonServiceImpl<T> implements ICommonService<T> {
 
     public List<T> find(T t){return getMapper().select(t);}
 
-
     @Override
     public T findById(int id) {
         return (T) getMapper().selectOne(id);
@@ -36,4 +35,6 @@ public abstract class CommonServiceImpl<T> implements ICommonService<T> {
     public void delete(int id) {
         getMapper().deleteByPrimaryKey(id);
     }
+
+
 }

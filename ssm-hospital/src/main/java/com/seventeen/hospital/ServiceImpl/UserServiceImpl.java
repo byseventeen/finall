@@ -1,6 +1,5 @@
 package com.seventeen.hospital.ServiceImpl;
 
-import com.seventeen.hospital.Service.ICommonService;
 import com.seventeen.hospital.Service.IUserService;
 import com.seventeen.hospital.beans.User;
 import com.seventeen.hospital.mapper.UserMapper;
@@ -18,4 +17,5 @@ public class UserServiceImpl extends CommonServiceImpl<User> implements IUserSer
     protected Mapper getMapper() {
         return this.userMapper;
     }
+
 }

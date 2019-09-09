@@ -45,13 +45,13 @@
           </div>
         </div>
         <div class="col-md-3">
-          <div class="quicklogin" >
+          <div id="quicklogin" >
               <div class="quicklogin-title"><h4>用户登录</h4></div>
               <form class="form-horizontal quickform" method="post" action="">
                 <div class="form-group">
-                  <label for="username" class="col-sm-3 control-label">用户名：</label>
+                  <label for="username" class="col-sm-3 control-label">账号：</label>
                   <div class="col-sm-7">
-                    <input type="text" id="username" class="form-control" placeholder="请输入用户名" v-model="formMess.inputusername">
+                    <input type="text" id="username" class="form-control" placeholder="请输入证件号码" v-model="formMess.inputusername">
                   </div>
                 </div>
                 <div class="form-group">
@@ -70,13 +70,18 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-7">
-                    <div class="checkbox">
-                      <label>
+                    <div class="checkbox ">
+                      <label class="col-sm-5 role"><input name="role" type="radio" checked="checked" value="normaluser" v-model="formMess.inputrole"/>普通用户</label>
+                      <label class="col-sm-5 role"><input name="role" type="radio" value="doctor" v-model="formMess.inputrole"/>医生</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox ">
+                      <label class="col-md-8 autolog">
                         <input type="checkbox"> 七天内自动登录
                       </label>
                     </div>
-                  </div>
+
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-1 col-sm-10">
@@ -89,10 +94,10 @@
 
               </div>
           </div>
-          <div class="quickinfo">
+          <div id="quickinfo" >
             <div class="quicklogin-title"><h4>用户信息</h4></div>
-            <div id="getusername" class="userinfo">用户名：小花花</div>
-            <div id="usernumber" class="userinfo">证件号：16115073003</div>
+            <div id="getusername" class="userinfo">用户名：{{username}}</div>
+            <div id="usernumber" class="userinfo">证件号：{{card_id}}</div>
             <div id="userpay" class="userinfo">预约未支付记录 <a href="#">0</a> 条</div>
             <div id="usergone" class="userinfo">预约成功未就诊记录 <a href="#">0</a> 条</div>
             <button type="submit" class="btn btn-default info-btn">退出</button>
@@ -146,6 +151,7 @@
 <script>
     import mheader from './mheader.vue'
     import axios from 'axios'
+    import qs from 'qs'
     export default {
         name: "index",
         components: {mheader},
@@ -154,9 +160,14 @@
             formMess:{
               "inputusername": "",
               "inputpassword": "",
-              "inputcode": ""
-            }
+              "inputcode": "",
+              "inputrole": ""
+            },
+            username: '',
+            card_id:''
           }
+
+
         },
         mounted(){
           this.createCode()
@@ -179,6 +190,8 @@
             validate(){
               var inputCode = document.getElementById("inputcode").value.toUpperCase();
               var checkCode = document.getElementById("code").value.substr(1);
+              var quicklogin= document.getElementById("quicklogin");
+              var quickinfo= document.getElementById("quickinfo");
               console.log(inputCode)
               //取得输入的验证码并转化为大写
               if(inputCode.length <= 0) { //若输入的验证码长度为0
@@ -187,30 +200,53 @@
               else if(inputCode!=(checkCode)) { //若输入的验证码与产生的验证码不一致时
                 console.log(checkCode)
                 alert("验证码输入错误！@_@"); //则弹出验证码输入错误
-                createCode();//刷新验证码
+                this.createCode();//刷新验证码
                 document.getElementById("inputcode").value = "";//清空文本框
               }
               else { //输入正确时
                 alert("Right");
-              }
 
-              let config = {
-                headers: {
-                  "Content-Type": "application/x-www-form-urlencoded"
+                var data={
+                   inputusername : this.formMess.inputusername,
+                   inputpassword : this.formMess.inputpassword
                 }
-              };
-              let formData = new FormData();
-              //参数
-              formData.append("inputusername",this.inputusername);
-              formData.append("inputpassword",this.inputpassword);
+                console.log(data.inputpassword)
+                if(data.inputusername!=""&&data.inputpassword!=""){
+                  console.log(this.formMess.inputrole)
+                  if(this.formMess.inputrole=="normaluser"){
+                    axios.post("/login.action ",this.$qs.stringify(data)).then(res => {
+                      if(res.data!=null){
+                        quicklogin.style.display="none";
+                        quickinfo.style.display="block";
+                        this.username=res.data.username;
+                        this.card_id=res.data.cardId;
+                      }
+                    }).catch(error => {
+                      console.log(error);
+                    });
+                  }
+                  else if (this.formMess.inputrole=="doctor") {
+                    axios.post("/doctor/dlogin.action ",this.$qs.stringify(data)).then(res => {
+                      console.log(res);
+                      if(res.data!=null){
+                        quicklogin.style.display="none";
+                        quickinfo.style.display="block";
+                        this.username=res.data.dname;
+                        this.card_id=res.data.cardId;
+                      }
+                    }).catch(error => {
+                      console.log(error);
+                    });
+                  }
+                  else{
+                    alert("输入错误")
+                  }
+                }
+                else {
+                  alert("请输入正确的证件号码和密码！")
+                }
 
-              axios.post("http://localhost:8080/login.action ",config,formData).then(res => {
-                console.log(res);
-              }).catch(error => {
-                console.log(error);
-              });
-
-
+              }
           }
 
        }
@@ -224,6 +260,9 @@
   .item img{
     width: 100%;
     height: 380px;
+  }
+  .form-group{
+    margin-bottom: 10px;
   }
   .quickorder{
     display: flex;
@@ -258,7 +297,7 @@
     font-size: 20px;
   }
 
-  .quicklogin{
+  #quicklogin{
     background-color: #F1F1F1;
     height: 380px;
     width: 100%;
@@ -274,7 +313,7 @@
     text-shadow: 0 0 2px #999;
   }
   .quickform{
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 10px 20px;
     margin: 0 auto;
   }
   .control-label{
@@ -285,6 +324,13 @@
     padding-left: 18px;
     font-size: 13px;
   }
+  .autolog{
+    margin-left: 22px;
+  }
+  .role{
+    font-size: 14px;
+    font-weight: 700;
+  }
   .sub-btn{
     width: 88%;
     height: 38px;
@@ -293,7 +339,7 @@
   .quick-extr p{
     margin-left: 30%;
   }
-  .quickinfo{
+  #quickinfo{
     background-color: #F1F1F1;
     height: 380px;
     width: 100%;
@@ -312,5 +358,6 @@
     margin-left: 10%;
     margin-top: 15px;
   }
+
 
 </style>
