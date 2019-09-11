@@ -226,7 +226,7 @@
                     });
                   }
                   else if (this.formMess.inputrole=="doctor") {
-                    axios.post("/doctor/dlogin.action ",this.$qs.stringify(data)).then(res => {
+                    axios.post("/api/doctor/dlogin.action",this.$qs.stringify(data)).then(res => {
                       console.log(res);
                       if(res.data!=null){
                         quicklogin.style.display="none";

@@ -15,7 +15,6 @@
                 <!-- 循环二级菜单数据并使用.stop阻止冒泡 -->
                 <li v-for="(a,index) in item.list" v-on:click.stop="doThis(index)">{{a}}</li>
               </ul>
-
             </li>
           </ul>
         </div>
@@ -37,9 +36,46 @@
                 </div>
               </div>
               <div class="doctor-right">
-                <button class="doctor-butt">查看排班表</button>
+                <button class="doctor-butt" @click="takebooktime()">查看排班表</button>
               </div>
-              <hr/>
+            </div>
+            <div class="doctor-time">
+              <table class="booktable">
+                <tr>
+                  <th style="background-color:#5F9EA0 "></th>
+                  <th class="date1"></th>
+                  <th class="date1"></th>
+                  <th class="date1"></th>
+                  <th class="date1"></th>
+                  <th class="date1"></th>
+                  <th class="date1"></th>
+                  <th class="date1"></th>
+                </tr>
+                <tr>
+                  <th>上午</th>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                </tr>
+                <tr>
+                  <th>下午</th>
+                  <td class="canbook">
+                    <button class="bookbut">预约</button>
+                  </td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                  <td class="canbook"></td>
+                </tr>
+              </table>
+
+
             </div>
             <hr/>
             <div class="doctors">
@@ -68,35 +104,97 @@
 
 <script>
     import mheader from './mheader.vue'
+    import axios from 'axios'
+    import qs from 'qs'
     export default {
         name: "book",
         components: {mheader},
       data() {
         return {
           headerData: [{
-            name: '外科',
-            list: ['烧伤外科', '胸外科', '骨科', '整形门诊', '外科门诊'],
+            name:  "",
+            list: [],
             show: false
           }, {
-            name: '导航2',
+            name: "",
+            list: [],
+            show: false
+          }, {
+            name: '',
+            list: [],
+            show: false
+          }, {
+            name: '',
             list: ['子集', '子集', '子集', '子集', '子集'],
             show: false
           }, {
-            name: '导航3',
+            name: '',
             list: ['子集', '子集', '子集', '子集', '子集'],
             show: false
-          }, {
-            name: '导航4',
+          },{
+            name: '',
             list: ['子集', '子集', '子集', '子集', '子集'],
             show: false
-          }, {
-            name: '导航5',
+          },{
+            name: '',
             list: ['子集', '子集', '子集', '子集', '子集'],
             show: false
-          }]
+        }],
+          dptypelist:[],
+          detypenamelist:[],
+          aa:[],
+          listdata:[],
+          listreturn:[]
         }
       },
+      mounted(){
+          this.changeDate(),
+          this.findDepartmenttype()
+      },
       methods: {
+          getlist(){
+            axios.post("/api/department/findOneDepartment.action",this.$qs.stringify(this.listdata)).then(res => {
+
+              this.listreturn.push(res.data[0].departmentname);
+              // this.headerData[i].list=res.data;
+              console.log(this.listreturn)
+            }).catch(error => {
+              console.log(error);
+            });
+          },
+
+        findDepartmenttype(){
+          this.$http.get('http://localhost:8080/departmenttype/findAllDepartmenttype.action')
+            .then(res => {
+              this.dptypelist=res.data;
+              for (var i=0;i<res.data.length;i++) {
+                this.detypenamelist.push(res.data[i].departmentname); //把取item的数据赋给 item: []中
+              }
+
+             for (var i=0;i<this.detypenamelist.length;i++){
+               this.headerData[i].name=this.dptypelist[i].departmentname;
+               this.listdata={
+                 dptypeid : this.dptypelist[i].departmenttypeid
+               }
+               axios.post("/api/department/findOneDepartment.action",this.$qs.stringify(this.listdata)).then(res => {
+                 for(var i=0;i<res.data.length;i++){
+                   this.listreturn.push(res.data[i].departmentname);
+                 }
+                 this.headerData[i].list=this.listreturn;
+                 console.log(i)
+                 console.log(this.headerData[i])
+                 this.listreturn = [];
+               }).catch(error => {
+                 console.log(error);
+               });
+
+             }
+            })
+            .catch(error => {
+              console.log(error);
+            })
+
+        },
         changeli: function(ind, item) {
           // 先循环数据中的show将其全部置为false,此时模板里的v-if判断生效关闭全部二级菜单,并移除样式
           this.headerData.forEach(i => {
@@ -111,6 +209,31 @@
         },
         doThis: function(index) {
           alert(index)
+        },
+        changeDate() {
+          var date = new Date();
+          var month;
+          var day;
+          var currentDay;
+          for (var i=0 ;i<7;i++){
+            if (i<=0){
+              currentDay = new Date();
+            } else{
+              currentDay = new Date(date.getTime()+i*24*60*60*1000);
+            }
+            day = currentDay.getDate();
+            month = currentDay.getMonth() + 1;
+            document.getElementsByClassName("date1")[i].innerHTML = month + "-" + day;
+      }
+    },
+        takebooktime(){
+          var bt=document.getElementsByClassName("doctor-time")[0];
+          if(bt.style.display=="none"){
+            bt.style.display="block";
+          }
+          else {
+            bt.style.display="none";
+          }
         }
       }
     }
@@ -177,7 +300,7 @@
   .doctors{
     width: 100%;
     display: flex;
-    margin-bottom: 38px;
+    margin-bottom: 10px;
     justify-content: space-between;
   }
   .doctor-left{
@@ -208,6 +331,33 @@
     width: 60%;
     height: 50px;
   }
-
+  .doctor-time{
+    width: 96%;
+    height: 150px;
+    text-align: center;
+    display: block;
+  }
+  .booktable{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: solid 1px #ffffff;
+  }
+  .booktable th{
+    width: 10%;
+    text-align: center;
+    border: solid 1px #ffffff;
+  }
+  .booktable td{
+    border: solid 1px #ffffff;
+  }
+  .date1{
+    background-color: #5F9EA0;
+  }
+  .bookbut{
+    width:60px;
+    height: 30px;
+    background-color: #5F9EA0;
+  }
 
 </style>

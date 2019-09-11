@@ -6,7 +6,6 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -16,12 +15,11 @@ module.exports = {
         changeOrigin:true,
         pathRewrite:{'^/login.action':''}
       },
-      '/doctor/dlogin.action':{
-        target:'http://localhost:8080/doctor/dlogin.action',
+      '/api':{
+        target:'http://localhost:8080',
         changeOrigin:true,
-        pathRewrite:{'^/doctor/dlogin.action':''}
-      }
-
+        pathRewrite:{'^/api':''}
+      },
     },
 
     // Various Dev Server settings
