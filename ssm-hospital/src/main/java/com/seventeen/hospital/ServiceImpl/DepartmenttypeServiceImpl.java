@@ -1,6 +1,7 @@
 package com.seventeen.hospital.ServiceImpl;
 
 import com.seventeen.hospital.Service.IDepartmenttypeService;
+import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Departmenttype;
 import com.seventeen.hospital.mapper.DepartmenttypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;

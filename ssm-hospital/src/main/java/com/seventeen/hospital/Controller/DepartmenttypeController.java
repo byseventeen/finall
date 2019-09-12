@@ -1,6 +1,7 @@
 package com.seventeen.hospital.Controller;
 
 import com.seventeen.hospital.Service.IDepartmenttypeService;
+import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Departmenttype;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path="/departmenttype")
@@ -72,18 +75,40 @@ public class DepartmenttypeController {
     }
 
     @ResponseBody
+    @CrossOrigin
     @RequestMapping("/findDepartmentByDetypeId.action")
-    public List<Departmenttype> findAllDepartment() {
-        int a;
-        List<Departmenttype> departmentList=new ArrayList<>();
-        List<Departmenttype> findlist = findAll();
-        for (int i = 0; i < findlist.size(); i++) {
-            System.out.println(findlist.get(i).getDepartmenttypeid());
-            a = findlist.get(i).getDepartmenttypeid();
-            departmentList.add((Departmenttype) departmenttypeService.findDepartmentBytypeId(a));
+//    public List<Departmenttype> findAllDepartment() {
+    public List findAllDepartment() {
 
-            System.out.println(departmentList);
+        //Map topFloorMap=new HashMap();
+        List secondFloorList=new ArrayList();
+        //topFloorMap.put("headerData",secondFloorList);
+        int a;
+        List<Departmenttype> findlist = findAll();
+
+        for (int i = 0; i < findlist.size(); i++) {
+            System.out.println(findlist.get(i).getDepartypementname());
+            a = findlist.get(i).getDepartmenttypeid();
+
+            List<Departmenttype> tempDepartmenttypeList=departmenttypeService.findDepartmentBytypeId(a);
+            System.out.println( departmenttypeService.findDepartmentBytypeId(a));
+
+            Map thirdFloorMap=new HashMap();
+            thirdFloorMap.put("name","");
+            thirdFloorMap.put("list","");
+            thirdFloorMap.put("show",false);
+            secondFloorList.add(thirdFloorMap);
+
+            List fourthList=new ArrayList();
+            for (Departmenttype d:tempDepartmenttypeList)
+                for (int j=0;j<d.getDepartments().size();j++)
+                    fourthList.add(d.getDepartments().get(j).getDepartmentname());
+
+            thirdFloorMap.put("list",fourthList);
+            thirdFloorMap.put("name",findlist.get(i).getDepartypementname());
+
         }
-        return departmentList;
+      //  System.out.println(topFloorMap);
+        return secondFloorList;
     }
 }

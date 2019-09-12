@@ -93,16 +93,5 @@ public class UserController {
     }
 
 
-   /* @CrossOrigin
-    @RequestMapping(path = "/dlogin.action",method= RequestMethod.POST)
-    @ResponseBody
-    public String dlogin(){
-        System.out.println("11111111");
-        System.out.println();
-        return "ok";
-    }*/
-
-
-
 
 }

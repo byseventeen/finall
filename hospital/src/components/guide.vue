@@ -9,7 +9,7 @@
               <!-- 循环数据在点击调用changeli方法时将当前索引和本条数据传进去,并使用当前数据show的bool值添加或移除样式 -->
               <li :class="[{active:item.show}]" @click="changeli(index,item)" v-for="(item,index) in headerData">
                 <!-- 在这里打印出boll值方便查看 -->
-                {{item.name}}{{item.show}}
+                {{item.name}}
                 <!-- 判断当前这条数据的bool值如果是true就打开二级菜单,如果是false就关闭二级菜单 -->
                 <ul v-show="item.show">
                   <!-- 循环二级菜单数据并使用.stop阻止冒泡 -->
@@ -40,25 +40,21 @@
       return {
         headerData: [{
           name: '就诊指南',
-          list: ['预约挂号流程', '常见疾病对应科室', '缴费流程', '整形门诊', '外科门诊'],
+          list: ['预约挂号流程', '常见疾病对应科室', '缴费流程'],
           show: false
         }, {
           name: '医院公告',
-          list: ['停诊通知', '节假日放假通知', '子集', '子集', '子集'],
+          list: ['停诊通知', '节假日放假通知'],
           show: false
         }, {
           name: '意见反馈',
-          list: ['子集', '子集', '子集', '子集', '子集'],
+          list: ['投诉反馈', '黑名单申诉'],
           show: false
         }, {
-          name: '导航4',
-          list: ['子集', '子集', '子集', '子集', '子集'],
+          name: '常见问题',
+          list: ['注册', '登录', '密码问题', '手机号码相关问题', '爽约问题'],
           show: false
-        }, {
-          name: '导航5',
-          list: ['子集', '子集', '子集', '子集', '子集'],
-          show: false
-        }]
+        },]
       }
     },
     methods: {

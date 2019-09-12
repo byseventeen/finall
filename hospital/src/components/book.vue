@@ -9,7 +9,7 @@
             <!-- 循环数据在点击调用changeli方法时将当前索引和本条数据传进去,并使用当前数据show的bool值添加或移除样式 -->
             <li :class="[{active:item.show}]" @click="changeli(index,item)" v-for="(item,index) in headerData">
               <!-- 在这里打印出boll值方便查看 -->
-              {{item.name}}{{item.show}}
+              {{item.name}}
               <!-- 判断当前这条数据的bool值如果是true就打开二级菜单,如果是false就关闭二级菜单 -->
               <ul v-show="item.show">
                 <!-- 循环二级菜单数据并使用.stop阻止冒泡 -->
@@ -111,7 +111,7 @@
         components: {mheader},
       data() {
         return {
-          headerData: [{
+          headerData: [/*{
             name:  "",
             list: [],
             show: false
@@ -139,7 +139,7 @@
             name: '',
             list: ['子集', '子集', '子集', '子集', '子集'],
             show: false
-        }],
+        }*/],
           dptypelist:[],
           detypenamelist:[],
           aa:[],
@@ -153,7 +153,7 @@
       },
       methods: {
           getlist(){
-            axios.post("/api/department/findOneDepartment.action",this.$qs.stringify(this.listdata)).then(res => {
+            axios.post("/api/department/findDepartmentByDetypeId.action",this.$qs.stringify(this.listdata)).then(res => {
 
               this.listreturn.push(res.data[0].departmentname);
               // this.headerData[i].list=res.data;
@@ -164,37 +164,16 @@
           },
 
         findDepartmenttype(){
-          this.$http.get('http://localhost:8080/departmenttype/findAllDepartmenttype.action')
+          this.$http.get('http://localhost:8080/departmenttype/findDepartmentByDetypeId.action')
             .then(res => {
-              this.dptypelist=res.data;
-              for (var i=0;i<res.data.length;i++) {
-                this.detypenamelist.push(res.data[i].departmentname); //把取item的数据赋给 item: []中
-              }
-
-             for (var i=0;i<this.detypenamelist.length;i++){
-               this.headerData[i].name=this.dptypelist[i].departmentname;
-               this.listdata={
-                 dptypeid : this.dptypelist[i].departmenttypeid
-               }
-               axios.post("/api/department/findOneDepartment.action",this.$qs.stringify(this.listdata)).then(res => {
-                 for(var i=0;i<res.data.length;i++){
-                   this.listreturn.push(res.data[i].departmentname);
-                 }
-                 this.headerData[i].list=this.listreturn;
-                 console.log(i)
-                 console.log(this.headerData[i])
-                 this.listreturn = [];
-               }).catch(error => {
-                 console.log(error);
-               });
-
-             }
+              this.headerData=res.data;
             })
             .catch(error => {
               console.log(error);
             })
 
         },
+
         changeli: function(ind, item) {
           // 先循环数据中的show将其全部置为false,此时模板里的v-if判断生效关闭全部二级菜单,并移除样式
           this.headerData.forEach(i => {

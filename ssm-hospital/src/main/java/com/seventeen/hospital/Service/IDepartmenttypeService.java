@@ -1,5 +1,6 @@
 package com.seventeen.hospital.Service;
 
+import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Departmenttype;
 
 import java.util.List;
