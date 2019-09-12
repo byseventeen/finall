@@ -30,7 +30,7 @@ public class DepartmentController {
         return findlist;
     }
 
-    @ResponseBody
+   /* @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneDepartment.action",method= RequestMethod.POST)
     public List<Department> findOneDepartment(HttpServletRequest request){
@@ -42,7 +42,7 @@ public class DepartmentController {
             System.out.println(t);
         }
         return findlist;
-    }
+    }*/
 
     @ResponseBody
     @CrossOrigin
@@ -54,16 +54,16 @@ public class DepartmentController {
         return "fine!";
     }
 
-    @ResponseBody
-    @CrossOrigin
-    @RequestMapping(path = "/updateDepartment.action")
-    public String updateDepartment(){
-        Department department=new Department();
-        department.setDtypeid(2);
-        department.setDepartmentname("骨科");
-        departmentService.update(department);
-        return "fine!";
-    }
+//    @ResponseBody
+//    @CrossOrigin
+//    @RequestMapping(path = "/updateDepartment.action")
+//    public String updateDepartment(){
+//        Department department=new Department();
+//        department.setDtypeid(2);
+//        department.setDepartmentname("骨科");
+//        departmentService.update(department);
+//        return "fine!";
+//    }
 
     @ResponseBody
     @CrossOrigin
@@ -72,4 +72,15 @@ public class DepartmentController {
         departmentService.delete(2);
         return "fine!";
     }
+
+
+    @ResponseBody
+    @RequestMapping("/find.action")
+    public List<Department> findAllDepartment(){
+        List<Department> departmentList = departmentService.findAllDepartment();
+        System.out.println(departmentList);
+        return departmentList;
+    }
+
+
 }

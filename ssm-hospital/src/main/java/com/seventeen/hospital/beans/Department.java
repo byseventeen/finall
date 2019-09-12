@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 
 @Data
@@ -17,4 +18,6 @@ public class Department {
     private Integer dtypeid;
     @Column(name = "department_profile")
     private String deprofile;
+    @Transient
+    private Departmenttype department_type;
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 @Service(value = "departmentService")
 public class DepartmentServiceImpl extends CommonServiceImpl<Department> implements IDepartmentService {
 
@@ -16,5 +18,10 @@ public class DepartmentServiceImpl extends CommonServiceImpl<Department> impleme
     @Override
     protected Mapper getMapper() {
         return this.departmentMapper;
+    }
+
+    @Override
+    public List<Department> findAllDepartment() {
+        return departmentMapper.findAllDepartment();
     }
 }
