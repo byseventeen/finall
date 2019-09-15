@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+	<!-- Bootstrap Styles-->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+     <!-- FontAwesome Styles-->
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- Custom Styles-->
+    <link href="../assets/css/custom-styles.css" rel="stylesheet" />
+     <!-- Google Fonts-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- TABLE STYLES-->
+    <link href="../assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <style>
+        .border{
+            border: 1px solid #999;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: -25px;
+            text-align: center;
+        }
+        .bgcolor{
+            background-color: #BBFFE4;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="menu"></div>
+
+        <div id="page-wrapper" >
+            <h1 class="page-header">课程信息管理<small>添加课程</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="index.html"><i class="fa fa-dashboard"></i>首页</a></li>
+                <li class="active"><a href="courseManager.html"><i class='fa'>课程管理</i></a></li>
+                <li class="active"><i class='fa'>修改课程</i></li>
+            </ol>
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                课程信息添加
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-inline">
+                                            <label>课名</label>
+                                            <input class="form-control" placeholder="请输入课名" name="course">
+                                        </div>
+                                        <br>
+                                        <div class="form-inline">
+                                            <label>年级</label>
+                                            <input class="form-control" placeholder="请输入年级" name="grade">
+                                        </div>
+                                        <br>
+                                        <div class=" form-inline">
+                                            <label>班级</label>
+                                            <input class="form-control" placeholder="请输入班级" name="class">
+                                        </div>
+                                        <br>
+                                        <div class="form-inline">
+                                            <label>节数</label>
+                                            <input class="form-control" placeholder="请输入节数" name="address">
+                                        </div>
+                                        <br>
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">学期 <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">第一学期</a></li>
+                                                <li><a href="#">第二学期</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9" style="margin-top: -35px">
+                                        <div style="">
+                                            <div class="form-group">
+                                                <label>周数选择</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-success"  id="all">全选</button>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <div class="border ">1</div>
+                                                <div class="border ">2</div>
+                                                <div class="border ">3</div>
+                                                <div class="border ">4</div>
+                                                <div class="border ">5</div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="border">6</div>
+                                                <div class="border">7</div>
+                                                <div class="border">8</div>
+                                                <div class="border">9</div>
+                                                <div class="border">10</div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="border">11</div>
+                                                <div class="border">12</div>
+                                                <div class="border">13</div>
+                                                <div class="border">14</div>
+                                                <div class="border">15</div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="border">16</div>
+                                                <div class="border">17</div>
+                                                <div class="border">18</div>
+                                                <div class="border">19</div>
+                                                <div class="border">20</div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="border">21</div>
+                                                <div class="border">22</div>
+                                                <div class="border">23</div>
+                                                <div class="border">24</div>
+                                                <div class="border">25</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- /. PAGE WRAPPER  -->
+            </div>
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="../assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="../assets/js/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <!-- DATA TABLE SCRIPTS -->
+    <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
+    <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+
+    <script src="../assets/js/custom-scripts.js"></script>
+    <script>
+        $("#menu").load("menu.html",function () {
+            var sc = document.createElement("script");
+            sc.src = "../assets/js/bootstrap.min.js";
+            $("body").append(sc);
+        });
+
+        // $(".border").click(function () {
+        //     var color = "#BBFFE4";
+        //     $(this).css("background-color",color);
+        // }).dblclick(function () {
+        //     var changecolor = "white"
+        //     $(this).css("background-color",changecolor);
+        // })
+        //
+        // $("#all").click(function () {
+        //     var color = "#BBFFE4";
+        //     $(".border").css("background-color",color);
+        // })
+        $(".border").click(function () {
+            if ($(this).hasClass("bgcolor")) {
+                $(this).removeClass("bgcolor");
+            }else{
+                $(this).addClass("bgcolor");
+            }
+        })
+        $("#all").click(function () {
+            if ( $(".border").hasClass("bgcolor")){
+                $(".border").removeClass("bgcolor");
+            }else{
+                $(".border").addClass("bgcolor");
+            }
+        })
+
+
+    </script>
+</body>
+</html>

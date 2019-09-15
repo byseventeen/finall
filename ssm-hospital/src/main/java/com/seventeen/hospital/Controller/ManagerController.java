@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,9 @@ public class ManagerController {
 
     @CrossOrigin
     @RequestMapping(path = "/mlogin.action",method= RequestMethod.POST)
+    @ResponseBody
     public String login(HttpServletRequest request) {
+
         Manager manager=new Manager();
         String managerid=request.getParameter("managerid");
         String managerpwd=request.getParameter("managerpwd");
@@ -32,10 +35,11 @@ public class ManagerController {
         String msg;
         if (loginMesg.size() != 0){
             msg="success";
+            return msg;
         }
         else
             msg="fail";
+            return msg;
 
-        return msg;
     }
 }

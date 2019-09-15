@@ -3,13 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="./jquery-1.10.2.js"></script>
 </head>
 <body>
-   <form action="/mlogin.action" method="post">
-       账号：<input type="text" class="managerid" name="managerid"><br>
-       密码：<input type="password" class="managerpwd" name="managerpwd"><br>
-       <input type="submit" value="登录">
+   <form >
+       账号：<input type="text" id="managerid" name="managerid"><br>
+       密码：<input type="password" id="managerpwd" name="managerpwd"><br>
+       <input type="button" id="butsubmit" value="登录">
+
    </form>
+   <script>
+
+       $(document).ready(function(){
+            $('#butsubmit').click(function (){
+                var managerid = $("#managerid").val();
+                var managerpwd = $("#managerpwd").val();
+
+                $.ajax({
+                    url:'/mlogin.action',
+                    async:false,
+                    data:{
+                        managerid:managerid,
+                        managerpwd:managerpwd
+                    },
+                    type:'POST',
+                    success:function(msg){
+                        console.log(msg)
+                        if(msg == "success"){
+                            //如果返回的IsOK的值为true,也就是用户名密码都正确，则执行该跳转
+                            window.location.href="./html/index.html";
+                            console.log("ok")
+                        }else{
+                            //window.location.href="http://www.baidu.com";
+                            console.log("fail")
+                        }
+                    },
+                    error:function (err){
+                        alert(err);
+                    }
+                    });
+                });
+       })
+
+   </script>
+
 
 </body>
 </html>
