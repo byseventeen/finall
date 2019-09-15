@@ -41,16 +41,21 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(path = "/addUser.action")
-    public String addUser(){
+    @RequestMapping(path = "/addUser.action",method= RequestMethod.POST)
+    public String addUser(HttpServletRequest request){
+        System.out.println("111111");
         User user=new User();
-        user.setUsername("钢铁侠");
-        user.setGender("男");
-        user.setCardId("441523200001027777");
+        user.setUsername(request.getParameter("username"));
+        user.setGender(request.getParameter("gender"));
+        user.setCardId(request.getParameter("cardId"));
         user.setPassword("123");
-        user.setPhone("123");
+        user.setPhone(request.getParameter("phone"));
+        user.setCardId(request.getParameter("cardId"));
+        user.setPassword("123");
+        user.setPhone(request.getParameter("phone"));
         userService.add(user);
-        return "aaa";
+        String msg="success";
+        return msg;
     }
 
     @CrossOrigin
