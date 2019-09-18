@@ -19,6 +19,7 @@ public class DepartmentController {
     @Resource(name = "departmentService")
     private IDepartmentService departmentService;
 
+    //查找门诊表里的所有的门诊
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findAllDepartment.action")
@@ -30,6 +31,7 @@ public class DepartmentController {
         return findlist;
     }
 
+    //根据科室id查找该科室下的所有门诊信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneDepartment.action",method= RequestMethod.POST)
@@ -44,6 +46,7 @@ public class DepartmentController {
         return findlist;
     }
 
+    //添加门诊
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/addDepartment.action")
@@ -54,6 +57,7 @@ public class DepartmentController {
         return "fine!";
     }
 
+    //根据id更改某个门诊的信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/updateDepartment.action")
@@ -65,6 +69,7 @@ public class DepartmentController {
         return "fine!";
     }
 
+    //根据id删除某个门诊
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/deleteDepartmen.action")
@@ -82,13 +87,12 @@ public class DepartmentController {
         return departmentList;
     }
 
-    //多对一，传一个id过来，根据id找到门诊和科室信息
+    //多对一，传一个门诊id过来，根据id找到门诊和科室信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findDepartmentById.action")
     public List<Department> findDepartmentById(int departmentid){
         List<Department> findlist=departmentService.findDepartmentById(departmentid);
-
         return findlist;
     }
 

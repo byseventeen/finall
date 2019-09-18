@@ -29,4 +29,9 @@ public class DepartmentServiceImpl extends CommonServiceImpl<Department> impleme
     public List<Department> findDepartmentById(int departmentid) {
         return departmentMapper.selectDepartmentById(departmentid);
     }
+
+    @Override
+    public List<Department> findDepartmentByDname(String dname) {
+        return departmentMapper.selectDepartmentByDname(dname);
+    }
 }

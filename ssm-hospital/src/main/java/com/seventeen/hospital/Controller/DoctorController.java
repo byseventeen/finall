@@ -1,5 +1,6 @@
 package com.seventeen.hospital.Controller;
 
+import com.seventeen.hospital.Service.IDepartmentService;
 import com.seventeen.hospital.Service.IDoctorService;
 import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Doctor;
@@ -23,6 +24,9 @@ import java.util.Map;
 public class DoctorController {
     @Resource(name = "doctorService")
     private IDoctorService doctorService;
+
+    @Resource(name = "departmentService")
+    private IDepartmentService departmentService;
 
     @Autowired
     DepartmentController departmentController;
@@ -87,7 +91,7 @@ public class DoctorController {
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneDoctorById.action")
-    public List<Doctor> findOneDoctorById(){
+    public List<Doctor> findOneDoctorById(HttpServletRequest request){
 
         List secondFloorList=new ArrayList();
         Map<String,Object> toMap=new HashMap<>();
@@ -95,7 +99,7 @@ public class DoctorController {
         String departmentname=null;
         String departypementname = null;
         String titlename= null;
-        List<Doctor> findlist=doctorService.findDoctorById(2);
+        List<Doctor> findlist=doctorService.findDoctorById(Integer.parseInt(request.getParameter("doctorid")));
 
         for (int i=0; i<findlist.size();i++){
             a=findlist.get(i).getDepartmentId();
@@ -163,14 +167,22 @@ public class DoctorController {
     @CrossOrigin
     @RequestMapping(path = "/updateDoctor.action",method= RequestMethod.POST)
     public String updateDoctor(HttpServletRequest request){
+        System.out.println("调用controller....");
+         String departmentname=request.getParameter("departmentname");
+         String departmenttype=request.getParameter("departmenttype");
+
+        List<Department> departmentList=departmentService.findDepartmentByDname(departmentname);
+        System.out.println(request.getParameter("did"));
+        System.out.println(departmentList.get(0).getDepartmentid());
+
         Doctor doctor=new Doctor();
         doctor.setDoctorid(Integer.valueOf(request.getParameter("did")));
         doctor.setDname(request.getParameter("dname"));
         doctor.setGender(request.getParameter("gender"));
         doctor.setCardId(request.getParameter("cardId"));
-        doctor.setPhone(request.getParameter("dname"));
-        doctor.setDepartmentId(Integer.valueOf(request.getParameter("departmentid")));
-        doctor.setTitleId(Integer.valueOf(request.getParameter("tid")));
+        doctor.setPhone(request.getParameter("phone"));
+        doctor.setDepartmentId(departmentList.get(0).getDepartmentid());
+        //doctor.setTitleId(Integer.valueOf(request.getParameter("tid")));
         doctor.setProfile(request.getParameter("profile"));
         doctorService.update(doctor);
         return "fine!";

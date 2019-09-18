@@ -78,7 +78,7 @@
                                             <label>个人简介</label>
                                             <input class="form-control" placeholder="请输入个人简介" name="address" id="profile">
                                         </div>
-                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <input type="submit" class="btn btn-success" id="btnsubmit" value="提交">
                                     </div>
                                 </div>
                             </div>
@@ -149,6 +149,35 @@
                 }
             });
 
+            console.log($("#dname").val())
+            console.log($("#department").val())
+            console.log($("#departmenttype").val())
+
+            $('#btnsubmit').click(function (){
+
+                $.ajax({
+                    url:'/doctor/updateDoctor.action',
+                    async:false,
+                    data:{
+                        did: id,
+                        dname:$("#dname").val(),
+                        gender: $('input[type=radio][name=sex]:checked').val(),
+                        phone:$("#phone").val(),
+                        cardId:$("#card_id").val(),
+                        title:$("#title").val(),
+                        departmentname:$("#department").val(),
+                        departmenttype:$("#departmenttype").val(),
+                        profile:$("#profile").val(),
+                    },
+                    type:'post',
+                    success:function(msg){
+                        alert("修改成功！")
+                    },
+                    error:function (err){
+                        alert(err);
+                    }
+                });
+            });
 
         });
     </script>
@@ -163,18 +192,6 @@
             $("body").append(sc);
         });
 
-        // $(".border").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(this).css("background-color",color);
-        // }).dblclick(function () {
-        //     var changecolor = "white"
-        //     $(this).css("background-color",changecolor);
-        // })
-        //
-        // $("#all").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(".border").css("background-color",color);
-        // })
         $(".border").click(function () {
             if ($(this).hasClass("bgcolor")) {
                 $(this).removeClass("bgcolor");

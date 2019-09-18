@@ -24,7 +24,7 @@
       <file leaf-file-name="doctorManager.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/doctorManager.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-86">
+            <state relative-caret-position="178">
               <caret line="139" column="36" selection-start-line="139" selection-start-column="36" selection-end-line="139" selection-end-column="36" />
             </state>
           </provider>
@@ -33,8 +33,8 @@
       <file leaf-file-name="DoctorController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DoctorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1452">
-              <caret line="172" column="45" lean-forward="true" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
+            <state relative-caret-position="224">
+              <caret line="97" column="16" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#findAll#0;class#DoctorController#0" />
@@ -48,32 +48,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/UserController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="72" column="53" lean-forward="true" selection-start-line="72" selection-start-column="53" selection-end-line="72" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#findAllUser#0;class#UserController#0" />
-                <element signature="method#findOneUser#0;class#UserController#0" />
-                <element signature="method#addUser#0;class#UserController#0" />
-                <element signature="method#deleteUser#0;class#UserController#0" />
-                <element signature="method#login#0;class#UserController#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="doctorModify.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/doctorModify.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="153" column="16" selection-start-line="153" selection-start-column="16" selection-end-line="153" selection-end-column="16" />
+            <state relative-caret-position="218">
+              <caret line="132" column="28" selection-start-line="132" selection-start-column="20" selection-end-line="132" selection-end-column="28" />
               <folding>
                 <element signature="e#5666#6379#0" />
-                <element signature="e#6703#6994#0" />
-                <element signature="e#7694#8364#0" />
               </folding>
             </state>
           </provider>
@@ -82,11 +63,10 @@
       <file leaf-file-name="userModify.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/userModify.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="65" column="40" lean-forward="true" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="111" />
+            <state relative-caret-position="124">
+              <caret line="129" column="44" lean-forward="true" selection-start-line="129" selection-start-column="24" selection-end-line="129" selection-end-column="44" />
               <folding>
-                <element signature="e#5290#5900#0" />
-                <element signature="e#5949#6680#0" />
+                <element signature="e#4513#5226#0" />
               </folding>
             </state>
           </provider>
@@ -148,12 +128,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/html/studentAdd.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/doctorAdd.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/menu.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/html/userModify.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/userAdd.html" />
-        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/mapper/DepartmentMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Service/IDepartmentService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/ServiceImpl/DepartmentServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DepartmentController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/userManager.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/beans/Title.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/mapper/TitleMapper.java" />
@@ -164,8 +139,13 @@
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Service/IDoctorService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/ServiceImpl/DoctorServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/TitleController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/html/doctorModify.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DepartmentController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Service/IDepartmentService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/mapper/DepartmentMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/ServiceImpl/DepartmentServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/userModify.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/doctorModify.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DoctorController.java" />
       </list>
     </option>
@@ -200,7 +180,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="979" />
@@ -492,12 +472,12 @@
       <workItem from="1568469652369" duration="5014000" />
       <workItem from="1568518039363" duration="22922000" />
       <workItem from="1568594249420" duration="29596000" />
-      <workItem from="1568682513377" duration="29087000" />
+      <workItem from="1568682513377" duration="40454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="210469000" />
+    <option name="totallyTimeSpent" value="221836000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -522,10 +502,10 @@
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49932614" weight="0.0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49932614" visible="true" weight="0.3293944" />
       <window_info anchor="bottom" id="Spring" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.21563342" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21563342" />
       <window_info id="Web" order="6" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="6" />
       <window_info id="Favorites" order="5" side_tool="true" />
@@ -536,40 +516,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.3293944" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Palette" order="2" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49932614" visible="true" weight="0.0" />
-      <window_info anchor="bottom" id="Spring" order="8" />
-      <window_info id="Image Layers" order="3" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.50067383" side_tool="true" weight="0.32496306" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.2983752" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Java Enterprise" order="11" />
-      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="13" show_stripe_button="false" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21563342" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Web" order="6" side_tool="true" />
-      <window_info anchor="right" id="Palette&#9;" order="5" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.41506648" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -582,7 +528,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DoctorController.java</url>
-          <line>133</line>
+          <line>137</line>
           <properties />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
@@ -762,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/ServiceImpl/DepartmentServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DepartmenttypeController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-77">
@@ -843,13 +782,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Service/IDepartmentService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="9" column="58" lean-forward="true" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/ServiceImpl/TitleServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
@@ -862,16 +794,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/mapper/DepartmentMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/html/userManager.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="706">
@@ -879,20 +801,6 @@
           <folding>
             <element signature="n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DepartmentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="84" column="3" lean-forward="true" selection-start-line="84" selection-start-column="3" selection-end-line="92" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/doctorManager.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-86">
-          <caret line="139" column="36" selection-start-line="139" selection-start-column="36" selection-end-line="139" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -946,29 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/userModify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="65" column="40" lean-forward="true" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="111" />
-          <folding>
-            <element signature="e#5290#5900#0" />
-            <element signature="e#5949#6680#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/doctorModify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="153" column="16" selection-start-line="153" selection-start-column="16" selection-end-line="153" selection-end-column="16" />
-          <folding>
-            <element signature="e#5666#6379#0" />
-            <element signature="e#6703#6994#0" />
-            <element signature="e#7694#8364#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/TitleController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -999,10 +884,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/ServiceImpl/DepartmentServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="34" column="61" selection-start-line="34" selection-start-column="61" selection-end-line="34" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/mapper/DepartmentMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Service/IDepartmentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DepartmentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="95" column="24" lean-forward="true" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="24" />
+          <folding>
+            <element signature="method#addDepartment#0;class#DepartmentController#0" />
+            <element signature="method#updateDepartment#0;class#DepartmentController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/UserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="72" column="53" lean-forward="true" selection-start-line="72" selection-start-column="53" selection-end-line="72" selection-end-column="53" />
+        <state relative-caret-position="284">
+          <caret line="67" column="29" lean-forward="true" selection-start-line="67" selection-start-column="29" selection-end-line="67" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#findAllUser#0;class#UserController#0" />
@@ -1014,10 +934,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/doctorManager.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="139" column="36" selection-start-line="139" selection-start-column="36" selection-end-line="139" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/userModify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="129" column="44" lean-forward="true" selection-start-line="129" selection-start-column="24" selection-end-line="129" selection-end-column="44" />
+          <folding>
+            <element signature="e#4513#5226#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/doctorModify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="132" column="28" selection-start-line="132" selection-start-column="20" selection-end-line="132" selection-end-column="28" />
+          <folding>
+            <element signature="e#5666#6379#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/seventeen/hospital/Controller/DoctorController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1452">
-          <caret line="172" column="45" lean-forward="true" selection-start-line="172" selection-start-column="45" selection-end-line="172" selection-end-column="45" />
+        <state relative-caret-position="224">
+          <caret line="97" column="16" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#findAll#0;class#DoctorController#0" />
