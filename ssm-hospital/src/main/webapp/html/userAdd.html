@@ -111,8 +111,6 @@
         })
     </script>
     <script>
-
-
             $('#btnsubmit').click(function (){
                 console.log("hello")
                 $.ajax({
@@ -126,14 +124,7 @@
                     },
                     type:'post',
                     success:function(msg){
-                        console.log(msg)
-                        if(msg == "success"){
-                            //如果返回的IsOK的值为true,也就是用户名密码都正确，则执行该跳转
-                            alert("添加成功！")
-                        }else{
-                            //window.location.href="http://www.baidu.com";
-                            console.log("fail")
-                        }
+                        alert("添加成功！")
                     },
                     error:function (err){
                         alert(err);

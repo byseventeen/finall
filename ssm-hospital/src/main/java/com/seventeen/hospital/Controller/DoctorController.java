@@ -1,7 +1,10 @@
 package com.seventeen.hospital.Controller;
 
 import com.seventeen.hospital.Service.IDoctorService;
+import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Doctor;
+import com.seventeen.hospital.beans.Title;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path="/doctor")
@@ -18,17 +24,109 @@ public class DoctorController {
     @Resource(name = "doctorService")
     private IDoctorService doctorService;
 
+    @Autowired
+    DepartmentController departmentController;
+
+    @Autowired
+    TitleController titleController;
+
+    //查询医生表里的所有医生信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findAllDoctor.action")
-    public List<Doctor> findAll(){
-        List<Doctor> findlist=doctorService.findAll();
-        for (Doctor t:findlist) {
-            System.out.println(t);
+    public List findAll(){
+        List findlist=doctorService.findAll();
+        for (int i=0; i<findlist.size();i++){
+            System.out.println(findlist.get(i));
         }
         return findlist;
     }
 
+    //查询医生所有信息，包括门诊信息，科室信息和职称信息等
+    @ResponseBody
+    @CrossOrigin
+    @RequestMapping(path = "/findAllDoctors.action")
+    public Map<String,Object> findAllDoctors(){
+        List secondFloorList=new ArrayList();
+        Map<String,Object> toMap=new HashMap<>();
+        int a,b;
+        String departmentname=null;
+        String departypementname = null;
+        String titlename= null;
+        List<Doctor> findlist=doctorService.findAll();
+        for (int i=0; i<findlist.size();i++){
+            a=findlist.get(i).getDepartmentId();
+            b=findlist.get(i).getTitleId();
+
+            List<Title> tempmentlist=titleController.findDepartmentById(b);
+
+            List<Department> tempDepartmentlist= departmentController.findDepartmentById(a);
+            for (int j=0;j<tempDepartmentlist.size();j++){
+                 departmentname=tempDepartmentlist.get(j).getDepartmentname();
+                 departypementname=tempDepartmentlist.get(j).getDepartment_type().getDepartypementname();
+                 titlename=tempmentlist.get(j).getTitlename();
+
+                Map thirdFloorMap=new HashMap();
+                thirdFloorMap.put("doctorid",findlist.get(i).getDoctorid());
+                thirdFloorMap.put("dname",findlist.get(i).getDname());
+                thirdFloorMap.put("gender",findlist.get(i).getGender());
+                thirdFloorMap.put("cardId",findlist.get(i).getCardId());
+                thirdFloorMap.put("phone",findlist.get(i).getPhone());
+                thirdFloorMap.put("profile",findlist.get(i).getProfile());
+                thirdFloorMap.put("departmentname",departmentname);
+                thirdFloorMap.put("departypementname",departypementname);
+                thirdFloorMap.put("titlename",titlename);
+                secondFloorList.add(thirdFloorMap);
+            }
+            toMap.put("data",secondFloorList);
+        }
+        return toMap;
+    }
+
+    //通过id查询一个医生的所有信息，包括门诊信息，科室信息和职称信息等
+    @ResponseBody
+    @CrossOrigin
+    @RequestMapping(path = "/findOneDoctorById.action")
+    public List<Doctor> findOneDoctorById(){
+
+        List secondFloorList=new ArrayList();
+        Map<String,Object> toMap=new HashMap<>();
+        int a,b;
+        String departmentname=null;
+        String departypementname = null;
+        String titlename= null;
+        List<Doctor> findlist=doctorService.findDoctorById(2);
+
+        for (int i=0; i<findlist.size();i++){
+            a=findlist.get(i).getDepartmentId();
+            b=findlist.get(i).getTitleId();
+
+            List<Title> tempmentlist=titleController.findDepartmentById(b);
+
+            List<Department> tempDepartmentlist= departmentController.findDepartmentById(a);
+            for (int j=0;j<tempDepartmentlist.size();j++){
+                departmentname=tempDepartmentlist.get(j).getDepartmentname();
+                departypementname=tempDepartmentlist.get(j).getDepartment_type().getDepartypementname();
+                titlename=tempmentlist.get(j).getTitlename();
+
+                Map thirdFloorMap=new HashMap();
+                thirdFloorMap.put("doctorid",findlist.get(i).getDoctorid());
+                thirdFloorMap.put("dname",findlist.get(i).getDname());
+                thirdFloorMap.put("gender",findlist.get(i).getGender());
+                thirdFloorMap.put("cardId",findlist.get(i).getCardId());
+                thirdFloorMap.put("phone",findlist.get(i).getPhone());
+                thirdFloorMap.put("profile",findlist.get(i).getProfile());
+                thirdFloorMap.put("departmentname",departmentname);
+                thirdFloorMap.put("departypementname",departypementname);
+                thirdFloorMap.put("titlename",titlename);
+                secondFloorList.add(thirdFloorMap);
+            }
+        }
+
+        return secondFloorList;
+    }
+
+    //查询医生表里的某个医生的信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneDoctor.action")
@@ -42,6 +140,7 @@ public class DoctorController {
         return findlist;
     }
 
+    //添加医生
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/addDoctor.action")
@@ -59,23 +158,25 @@ public class DoctorController {
         return "fine!";
     }
 
+    //更新某个医生信息
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(path = "/updateDoctor.action")
-    public String updateDoctor(){
+    @RequestMapping(path = "/updateDoctor.action",method= RequestMethod.POST)
+    public String updateDoctor(HttpServletRequest request){
         Doctor doctor=new Doctor();
-        doctor.setDname("kk女神");
-        doctor.setGender("女");
-        doctor.setCardId("123457");
-        doctor.setPassword("123");
-        doctor.setPhone("1234");
-        doctor.setDepartmentId(2);
-        doctor.setTitleId(1);
-        doctor.setProfile("kk is a beauty!");
+        doctor.setDoctorid(Integer.valueOf(request.getParameter("did")));
+        doctor.setDname(request.getParameter("dname"));
+        doctor.setGender(request.getParameter("gender"));
+        doctor.setCardId(request.getParameter("cardId"));
+        doctor.setPhone(request.getParameter("dname"));
+        doctor.setDepartmentId(Integer.valueOf(request.getParameter("departmentid")));
+        doctor.setTitleId(Integer.valueOf(request.getParameter("tid")));
+        doctor.setProfile(request.getParameter("profile"));
         doctorService.update(doctor);
         return "fine!";
     }
 
+    //删除某个医生
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/deleteDoctor.action")
@@ -84,6 +185,8 @@ public class DoctorController {
         return "fine!";
     }
 
+
+    //医生登录的验证
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/dlogin.action",method= RequestMethod.POST)

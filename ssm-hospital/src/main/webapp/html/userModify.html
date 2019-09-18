@@ -32,34 +32,38 @@
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                课程信息添加
+                                课程信息修改
                             </div>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group  ">
+                                            <label>用户id</label>
+                                            <span id="userid"></span>
+                                        </div>
+                                        <div class="form-group  ">
                                             <label>用户姓名</label>
-                                            <input class="form-control" placeholder="请输入用户名字" name="course">
+                                            <input class="form-control" placeholder="请输入用户名字" name="course" id="username">
                                         </div>
                                         <div class="form-group">
                                             <label>性别</label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="sex" id="sex-1" value="male" checked="">男
+                                                <input type="radio" name="sex" id="sex-1" value="男" checked="">男
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="sex" id="sex-2" value="female">女
+                                                <input type="radio" name="sex" id="sex-2" value="女">女
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label>手机</label>
-                                            <input class="form-control" placeholder="请输入手机号码" name="class">
+                                            <input class="form-control" placeholder="请输入手机号码" name="class" id="phone">
                                         </div>
                                         <div class="form-group">
                                             <label>证件号码</label>
-                                            <input class="form-control" placeholder="请输入证件号码" name="address">
+                                            <input class="form-control" placeholder="请输入证件号码" name="address" id="card_id">
                                         </div>
 
-                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <input type="submit" class="btn btn-success" id="btnsubmit" value="提交">
                                     </div>
                                 </div>
                             </div>
@@ -86,6 +90,65 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+
+            function getUrlSearch(name) {
+                // 未传参，返回空
+                if (!name) return null;
+                // 查询参数：先通过search取值，如果取不到就通过hash来取
+                var after = window.location.search;
+                after = after.substr(1) || window.location.hash.split('?')[1];
+                // 地址栏URL没有查询参数，返回空
+                if (!after) return null;
+                // 如果查询参数中没有"name"，返回空
+                if (after.indexOf(name) === -1) return null;
+                var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+                // 当地址栏参数存在中文时，需要解码，不然会乱码
+                var r = decodeURI(after).match(reg);
+                // 如果url中"name"没有值，返回空
+                if (!r) return null;
+                return r[2];
+            }
+            var id=getUrlSearch("userid");
+
+            $.ajax({
+                url:'/findOneUser.action',
+                async:false,
+                data:{
+                    userid:id
+                },
+                type:'get',
+                success:function(findList){
+                    $("#username").val(findList[0].username);
+                    $("input[name='sex'][value="+findList[0].gender+"]").attr("checked",true);
+                    $("#phone").val(findList[0].phone);
+                    $("#card_id").val(findList[0].cardId);
+                },
+                error:function (err){
+                    alert(err);
+                }
+            });
+
+            $('#btnsubmit').click(function (){
+                console.log(id);
+                $.ajax({
+                    url:'/updateUser.action',
+                    async:false,
+                    data:{
+                        userid: id,
+                        username:$("#username").val(),
+                        gender: $('input[type=radio][name=sex]:checked').val(),
+                        phone:$("#phone").val(),
+                        cardId:$("#card_id").val()
+                    },
+                    type:'post',
+                    success:function(msg){
+                        alert("修改成功！")
+                    },
+                    error:function (err){
+                        alert(err);
+                    }
+                });
+            });
         });
     </script>
          <!-- /. PAGE WRAPPER  -->
@@ -99,18 +162,6 @@
             $("body").append(sc);
         });
 
-        // $(".border").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(this).css("background-color",color);
-        // }).dblclick(function () {
-        //     var changecolor = "white"
-        //     $(this).css("background-color",changecolor);
-        // })
-        //
-        // $("#all").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(".border").css("background-color",color);
-        // })
         $(".border").click(function () {
             if ($(this).hasClass("bgcolor")) {
                 $(this).removeClass("bgcolor");
@@ -125,7 +176,6 @@
                 $(".border").addClass("bgcolor");
             }
         })
-
 
     </script>
 </body>

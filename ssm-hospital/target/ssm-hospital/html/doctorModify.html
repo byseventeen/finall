@@ -38,45 +38,45 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group  ">
-                                            <label>医生学号</label>
-                                            <input class="form-control" placeholder="请输入学生学号" name="course">
+                                            <label>医生编号</label>
+                                            <input class="form-control" placeholder="请输入学生学号" name="course" id="did">
                                         </div>
                                         <div class="form-group  ">
                                             <label>医生姓名</label>
-                                            <input class="form-control" placeholder="请输入学生名字" name="course">
+                                            <input class="form-control" placeholder="请输入学生名字" name="course" id="dname">
                                         </div>
                                         <div class="form-group">
                                             <label>性别</label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="sex" id="sex-1" value="male" checked="">男
+                                                <input type="radio" name="sex" id="sex-1" value="男" checked="">男
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="sex" id="sex-2" value="female">女
+                                                <input type="radio" name="sex" id="sex-2" value="女">女
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label>手机号码</label>
-                                            <input class="form-control" placeholder="请输入手机号码" name="class">
+                                            <input class="form-control" placeholder="请输入手机号码" name="class" id="phone">
                                         </div>
                                         <div class="form-group">
                                             <label>证件号码</label>
-                                            <input class="form-control" placeholder="请输入证件号码" name="address">
+                                            <input class="form-control" placeholder="请输入证件号码" name="address" id="cardId">
                                         </div>
                                         <div class="form-group">
                                             <label>职称</label>
-                                            <input class="form-control" placeholder="请输入职称" name="address">
+                                            <input class="form-control" placeholder="请输入职称" name="address" id="title">
                                         </div>
                                         <div class="form-group">
                                             <label>所属门诊</label>
-                                            <input class="form-control" placeholder="请输入所属门诊" name="address">
+                                            <input class="form-control" placeholder="请输入所属门诊" name="address" id="department">
                                         </div>
                                         <div class="form-group">
                                             <label>所属科室</label>
-                                            <input class="form-control" placeholder="请输入所属科室" name="address">
+                                            <input class="form-control" placeholder="请输入所属科室" name="address" id="departmenttype">
                                         </div>
                                         <div class="form-group">
                                             <label>个人简介</label>
-                                            <input class="form-control" placeholder="请输入个人简介" name="address">
+                                            <input class="form-control" placeholder="请输入个人简介" name="address" id="profile">
                                         </div>
                                         <button type="submit" class="btn btn-success">提交</button>
                                     </div>
@@ -105,6 +105,51 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+
+            function getUrlSearch(name) {
+                // 未传参，返回空
+                if (!name) return null;
+                // 查询参数：先通过search取值，如果取不到就通过hash来取
+                var after = window.location.search;
+                after = after.substr(1) || window.location.hash.split('?')[1];
+                // 地址栏URL没有查询参数，返回空
+                if (!after) return null;
+                // 如果查询参数中没有"name"，返回空
+                if (after.indexOf(name) === -1) return null;
+                var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+                // 当地址栏参数存在中文时，需要解码，不然会乱码
+                var r = decodeURI(after).match(reg);
+                // 如果url中"name"没有值，返回空
+                if (!r) return null;
+                return r[2];
+            }
+            var id=getUrlSearch("doctorid");
+            console.log(id)
+
+            $.ajax({
+                url:'/doctor/findOneDoctorById.action',
+                async:false,
+                data:{
+                    doctorid:id
+                },
+                type:'get',
+                success:function(secondFloorList){
+                    $("#did").val(secondFloorList[0].doctorid);
+                    $("#dname").val(secondFloorList[0].dname);
+                    $("input[name='sex'][value="+secondFloorList[0].gender+"]").attr("checked",true);
+                    $("#phone").val(secondFloorList[0].phone);
+                    $("#cardId").val(secondFloorList[0].cardId);
+                    $("#title").val(secondFloorList[0].titlename);
+                    $("#department").val(secondFloorList[0].departmentname);
+                    $("#departmenttype").val(secondFloorList[0].departypementname);
+                    $("#profile").val(secondFloorList[0].profile);
+                },
+                error:function (err){
+                    alert(err);
+                }
+            });
+
+
         });
     </script>
          <!-- /. PAGE WRAPPER  -->

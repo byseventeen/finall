@@ -30,7 +30,7 @@ public class DepartmentController {
         return findlist;
     }
 
-   /* @ResponseBody
+    @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneDepartment.action",method= RequestMethod.POST)
     public List<Department> findOneDepartment(HttpServletRequest request){
@@ -42,7 +42,7 @@ public class DepartmentController {
             System.out.println(t);
         }
         return findlist;
-    }*/
+    }
 
     @ResponseBody
     @CrossOrigin
@@ -54,32 +54,42 @@ public class DepartmentController {
         return "fine!";
     }
 
-//    @ResponseBody
-//    @CrossOrigin
-//    @RequestMapping(path = "/updateDepartment.action")
-//    public String updateDepartment(){
-//        Department department=new Department();
-//        department.setDtypeid(2);
-//        department.setDepartmentname("骨科");
-//        departmentService.update(department);
-//        return "fine!";
-//    }
+    @ResponseBody
+    @CrossOrigin
+    @RequestMapping(path = "/updateDepartment.action")
+    public String updateDepartment(){
+        Department department=new Department();
+        department.setDtypeid(2);
+        department.setDepartmentname("骨科");
+        departmentService.update(department);
+        return "fine!";
+    }
 
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(path = "/deleteDepartmenttype.action")
+    @RequestMapping(path = "/deleteDepartmen.action")
     public String deleteDepartmenttype(){
         departmentService.delete(2);
         return "fine!";
     }
 
-
+    //多对一，查询所有门诊，并查出科室的所有信息
     @ResponseBody
     @RequestMapping("/find.action")
     public List<Department> findAllDepartment(){
         List<Department> departmentList = departmentService.findAllDepartment();
         System.out.println(departmentList);
         return departmentList;
+    }
+
+    //多对一，传一个id过来，根据id找到门诊和科室信息
+    @ResponseBody
+    @CrossOrigin
+    @RequestMapping(path = "/findDepartmentById.action")
+    public List<Department> findDepartmentById(int departmentid){
+        List<Department> findlist=departmentService.findDepartmentById(departmentid);
+
+        return findlist;
     }
 
 

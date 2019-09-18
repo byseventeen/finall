@@ -14,6 +14,10 @@
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <!-- TABLE STYLES-->
     <link href="../assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+
+    <style>
+        .btn-primary{margin-right: 10px;}
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -49,8 +53,8 @@
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr class="odd gradeX">
+                                        <tbody id="oddbody">
+                                        <tr class="odd gradeX" id="oddcontent">
                                             <td class="center">001</td>
                                             <td class="center">李明</td>
                                             <td class="center">男</td>
@@ -89,8 +93,79 @@
 
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+            $('#dataTables-example').dataTable({
+                "process": true,
+                "searching": true,
+                "serviceSide": true,
+                "destroy": true,
+                "retrieve":true,
+                "ajax": "/findAllUser.action",
+
+                "language": {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    // 排序方式
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                },
+
+                "columns": [
+                    { "data": "userid" },
+                    { "data": "username" },
+                    { "data": "gender" },
+                    { "data": "phone" },
+                    { "data": "cardId" },
+                    {"sDefaultContent": "",
+                        data:"userid",
+                        "render": function (data) {
+                            var id=data;
+                            return "<td class=\"center\">" + "<a href=\"userModify.html?userid="+id+"\">"+"<button class=\"btn btn-primary\"><i class=\"fa fa-edit\">修改</i></button>"+"</a>"
+                                + "<button class=\"btn btn-danger\" onclick=\"getindex("+id+")\"><i class=\"fa fa-pencil\"></i> 删除</button>"
+                                +"</td>";
+                        }
+                    }
+                ]
+
+            });
+
         });
+        function getindex(userid){
+
+            $.ajax({
+                url:'/deleteUser.action',
+                async:false,
+                data:{
+                    userid:userid
+                },
+                type:'get',
+                success:function(msg){
+                    alert("删除成功！")
+                },
+                error:function (err){
+                    alert(err);
+                }
+            });
+        }
+
+
     </script>
     <script src="../assets/js/custom-scripts.js"></script>
     <script>

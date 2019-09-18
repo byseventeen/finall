@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IDepartmentService extends ICommonService<Department> {
     List<Department> findAllDepartment();
+
+    List<Department> findDepartmentById(int departmentid);
 }

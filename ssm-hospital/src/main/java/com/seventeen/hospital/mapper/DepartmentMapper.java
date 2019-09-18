@@ -18,7 +18,7 @@ public interface DepartmentMapper extends Mapper<Department> {
            @Result(property = "departmentname",column = "department_name"),
            @Result(property = "deprofile",column = "department_profile"),
            @Result(property = "department_type.departmenttypeid",column = "id"),
-           @Result(property = "department_type.departmentname",column = "detype_name")
+           @Result(property = "department_type.departypementname",column = "detype_name")
    })
    List<Department> findAllDepartment();
 
@@ -30,6 +30,17 @@ public interface DepartmentMapper extends Mapper<Department> {
            @Result(property = "dtypeid",column = "detype_id"),
    })
    List<Department> selectDepartmentByDeptypeId(int deptypeid);
+
+   //根据门诊id查询门诊所有信息和科室信息
+   @Select("select * FROM department,departmenttype WHERE department.detype_id=departmenttype.id AND department.id=#{department}")
+   @Results({
+           @Result(property = "departmentid",column = "id"),
+           @Result(property = "departmentname",column = "department_name"),
+           @Result(property = "deprofile",column = "department_profile"),
+           @Result(property = "department_type.departmenttypeid",column = "id"),
+           @Result(property = "department_type.departypementname",column = "detype_name")
+   })
+   List<Department> selectDepartmentById(int departmentid);
 
 
 }

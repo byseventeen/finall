@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 @Service(value = "doctorService")
 public class DoctorServiceImpl extends CommonServiceImpl<Doctor> implements IDoctorService {
     @Autowired
@@ -15,5 +17,10 @@ public class DoctorServiceImpl extends CommonServiceImpl<Doctor> implements IDoc
     @Override
     protected Mapper getMapper() {
         return this.doctorMapper;
+    }
+
+    @Override
+    public List<Doctor> findDoctorById(int doctorid) {
+        return doctorMapper.selectDoctorById(doctorid);
     }
 }

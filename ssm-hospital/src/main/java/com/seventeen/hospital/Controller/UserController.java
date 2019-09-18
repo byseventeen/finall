@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -16,30 +18,32 @@ public class UserController {
     @Resource(name = "userService")
     private IUserService userService;
 
+    //查询用户表里的所有用户
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findAllUser.action")
-    public List<User> findAllUser(){
+    public Map<String,Object> findAllUser(){
         List<User> findList=userService.findAll();
-        for (User user:findList) {
-            System.out.println(user);
-        }
-        return findList;
+        Map<String,Object> toMap=new HashMap<>();
+        toMap.put("data",findList);
+        return toMap;
     }
 
+    //根据用户id查找某个用户
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneUser.action")
-    public List<User> findOneUser(){
+    public List<User> findOneUser(HttpServletRequest request){
+        System.out.println("111111");
         User user=new User();
-        user.setUsername("变形金刚");
+        user.setUserid(Integer.valueOf(request.getParameter("userid")));
+
         List<User> findList= userService.find(user);
-        for (User list:findList) {
-            System.out.println(list);
-        }
+
         return findList;
     }
 
+    //添加用户
     @CrossOrigin
     @RequestMapping(path = "/addUser.action",method= RequestMethod.POST)
     public String addUser(HttpServletRequest request){
@@ -51,34 +55,37 @@ public class UserController {
         user.setPassword("123");
         user.setPhone(request.getParameter("phone"));
         user.setCardId(request.getParameter("cardId"));
-        user.setPassword("123");
-        user.setPhone(request.getParameter("phone"));
         userService.add(user);
         String msg="success";
         return msg;
     }
 
+    //更新某个用户
     @CrossOrigin
-    @RequestMapping(path = "/updateUser.action")
-    public String updateUser(){
+    @RequestMapping(path = "/updateUser.action",method= RequestMethod.POST)
+    public String updateUser(HttpServletRequest request){
+        System.out.println("111111");
         User user=new User();
-        user.setUserid(2);
-        user.setUsername("变形金刚");
-        user.setGender("男");
-        user.setCardId("441523200001027777");
-        user.setPassword("123");
-        user.setPhone("123");
+        user.setUserid(Integer.valueOf(request.getParameter("userid")));
+        user.setUsername(request.getParameter("username"));
+        user.setGender(request.getParameter("gender"));
+        user.setCardId(request.getParameter("cardId"));
+        user.setPhone(request.getParameter("phone"));
         userService.update(user);
-        return "aaa";
+        String msg="success";
+        return msg;
     }
 
+    //根据用户id删除某个用户
     @CrossOrigin
     @RequestMapping(path = "/deleteUser.action")
-    public String deleteUser(){
-        userService.delete(2);
-        return "aaa";
+    public String deleteUser(HttpServletRequest request){
+        userService.delete(Integer.parseInt(request.getParameter("userid")));
+        String msg="success";
+        return msg;
     }
 
+    //用户的登录验证
     @CrossOrigin
     @RequestMapping(path = "/login.action",method= RequestMethod.POST)
     @ResponseBody
@@ -96,7 +103,5 @@ public class UserController {
         else
             return null;
     }
-
-
 
 }

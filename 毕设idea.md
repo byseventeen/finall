@@ -290,3 +290,11 @@ public interface DepartmentMapper extends Mapper<Department> {
 登录成功之后需要跳转到管理员首页，失败则需要返回失败，前端提示根据失败提示管理员输入错误。
 
 思路：不在后端做页面的跳转，要在前端页面的相互跳转。后端给前端发送数据，直接return，并且加上@ResponseBody的注解。在前端则是用ajax对后端的数据进行请求。
+
+
+
+##### 在一个controller里调用另一个controller的方法
+
+一般来说可以实例化，创建对象，再用对象调用方法。
+
+但再ssm中因为是自动注入的，所以需要在要调用东西的controller里面注入另一个controller对象，再用对象调用方法。实例化对象方法不一样。
