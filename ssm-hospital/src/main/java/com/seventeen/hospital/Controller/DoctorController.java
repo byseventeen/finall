@@ -216,7 +216,6 @@ public class DoctorController {
         return "fine!";
     }
 
-
     //医生登录的验证
     @ResponseBody
     @CrossOrigin
@@ -237,6 +236,5 @@ public class DoctorController {
         else
             return null;
     }
-
 
 }

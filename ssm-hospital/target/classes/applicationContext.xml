@@ -47,7 +47,7 @@
     <tx:annotation-driven transaction-manager="transactionManager" />
     <!--视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/html/"></property>
+        <property name="prefix" value="/html/"></property>
         <property name="suffix" value=".html"></property>
     </bean>
     <!-- 文件上传解析器 -->
