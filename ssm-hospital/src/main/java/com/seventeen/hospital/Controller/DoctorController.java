@@ -2,6 +2,7 @@ package com.seventeen.hospital.Controller;
 
 import com.seventeen.hospital.Service.IDepartmentService;
 import com.seventeen.hospital.Service.IDoctorService;
+import com.seventeen.hospital.Service.ITitleService;
 import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Doctor;
 import com.seventeen.hospital.beans.Title;
@@ -27,6 +28,9 @@ public class DoctorController {
 
     @Resource(name = "departmentService")
     private IDepartmentService departmentService;
+
+    @Resource(name = "titleService")
+    private ITitleService titleService;
 
     @Autowired
     DepartmentController departmentController;
@@ -147,17 +151,27 @@ public class DoctorController {
     //添加医生
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(path = "/addDoctor.action")
-    public String addDoctor(){
+    @RequestMapping(path = "/addDoctor.action",method= RequestMethod.POST )
+    public String addDoctor(HttpServletRequest request){
+        String departmentname=request.getParameter("departmentname");
+        String titlename=request.getParameter("titlename");
+
+        List<Department> departmentList=departmentService.findDepartmentByDname(departmentname);
+
+        Title title=new Title();
+        title.setTitlename(titlename);
+        List<Title> tlist= titleService.find(title);
+        int tid=tlist.get(0).getTid();
+
         Doctor doctor=new Doctor();
-        doctor.setDname("kk女神");
-        doctor.setGender("女");
-        doctor.setCardId("123457");
+        doctor.setDname(request.getParameter("dname"));
+        doctor.setGender(request.getParameter("gender"));
+        doctor.setCardId(request.getParameter("cardId"));
         doctor.setPassword("123");
-        doctor.setPhone("123");
-        doctor.setDepartmentId(2);
-        doctor.setTitleId(1);
-        doctor.setProfile("kk is a beauty!");
+        doctor.setPhone(request.getParameter("phone"));
+        doctor.setDepartmentId(departmentList.get(0).getDepartmentid());
+        doctor.setTitleId(tid);
+        doctor.setProfile(request.getParameter("profile"));
         doctorService.add(doctor);
         return "fine!";
     }
@@ -169,7 +183,12 @@ public class DoctorController {
     public String updateDoctor(HttpServletRequest request){
         System.out.println("调用controller....");
          String departmentname=request.getParameter("departmentname");
-         String departmenttype=request.getParameter("departmenttype");
+         String titlename=request.getParameter("title");
+
+         Title title=new Title();
+         title.setTitlename(titlename);
+         List<Title> tlist= titleService.find(title);
+         int tid=tlist.get(0).getTid();
 
         List<Department> departmentList=departmentService.findDepartmentByDname(departmentname);
         System.out.println(request.getParameter("did"));
@@ -182,7 +201,7 @@ public class DoctorController {
         doctor.setCardId(request.getParameter("cardId"));
         doctor.setPhone(request.getParameter("phone"));
         doctor.setDepartmentId(departmentList.get(0).getDepartmentid());
-        //doctor.setTitleId(Integer.valueOf(request.getParameter("tid")));
+        doctor.setTitleId(tid);
         doctor.setProfile(request.getParameter("profile"));
         doctorService.update(doctor);
         return "fine!";
@@ -192,8 +211,8 @@ public class DoctorController {
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/deleteDoctor.action")
-    public String deleteDoctor(){
-        doctorService.delete(2);
+    public String deleteDoctor(HttpServletRequest request){
+        doctorService.delete(Integer.parseInt(request.getParameter("doctorid")));
         return "fine!";
     }
 

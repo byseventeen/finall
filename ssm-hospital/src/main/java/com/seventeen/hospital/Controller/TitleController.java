@@ -29,6 +29,19 @@ public class TitleController {
 
     @ResponseBody
     @CrossOrigin
+    @RequestMapping(path = "/findOneTitle.action")
+    public List<Title> findOne(){
+        Title title=new Title();
+        title.setTitlename("住院医师");
+        List<Title> findlist=titleService.find(title);
+        for (Title t:findlist) {
+            System.out.println(t);
+        }
+        return findlist;
+    }
+
+    @ResponseBody
+    @CrossOrigin
     @RequestMapping(path = "/addTitle.action")
     public String addTitle(){
         Title title=new Title();

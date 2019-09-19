@@ -38,47 +38,43 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group  ">
-                                            <label>医生编号</label>
-                                            <input class="form-control" placeholder="请输入医生编号" name="course">
-                                        </div>
-                                        <div class="form-group  ">
                                             <label>医生姓名</label>
-                                            <input class="form-control" placeholder="请输入医生姓名" name="course">
+                                            <input class="form-control" placeholder="请输入医生姓名" name="course" id="dname">
                                         </div>
                                         <div class="form-group">
                                             <label>性别</label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="sex" id="sex-1" value="male" checked="">男
+                                                <input type="radio" name="sex" id="sex-1" value="男" checked="">男
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="sex" id="sex-2" value="female">女
+                                                <input type="radio" name="sex" id="sex-2" value="女">女
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label>手机号码</label>
-                                            <input class="form-control" placeholder="请输入手机号码" name="class">
+                                            <input class="form-control" placeholder="请输入手机号码" name="class" id="phone">
                                         </div>
                                         <div class="form-group">
                                             <label>证件号码</label>
-                                            <input class="form-control" placeholder="请输入证件号码" name="address">
+                                            <input class="form-control" placeholder="请输入证件号码" name="address" id="cardId">
                                         </div>
                                         <div class="form-group">
                                             <label>职称</label>
-                                            <input class="form-control" placeholder="请输入职称" name="address">
+                                            <input class="form-control" placeholder="请输入职称" name="address" id="title">
                                         </div>
                                         <div class="form-group">
                                             <label>所属门诊</label>
-                                            <input class="form-control" placeholder="请输入所属门诊" name="address">
+                                            <input class="form-control" placeholder="请输入所属门诊" name="address" id="department">
                                         </div>
                                         <div class="form-group">
                                             <label>所属科室</label>
-                                            <input class="form-control" placeholder="请输入所属科室" name="address">
+                                            <input class="form-control" placeholder="请输入所属科室" name="address" id="departmenttype">
                                         </div>
                                         <div class="form-group">
                                             <label>个人简介</label>
-                                            <input class="form-control" placeholder="请输入个人简介" name="address">
+                                            <input class="form-control" placeholder="请输入个人简介" name="address" id="profile">
                                         </div>
-                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <input type="submit" class="btn btn-success" id="btnsubmit" value="提交">
                                     </div>
                                 </div>
                             </div>
@@ -105,6 +101,31 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+
+            $('#btnsubmit').click(function (){
+                console.log("hello")
+                $.ajax({
+                    url:'/doctor/addDoctor.action',
+                    async:false,
+                    data:{
+                        dname:$("#dname").val(),
+                        gender: $('input[type=radio][name=sex]:checked').val(),
+                        phone:$("#phone").val(),
+                        cardId:$("#cardId").val(),
+                        departmentname:$("#department").val(),
+                        departmenttypename:$("#departmenttype").val(),
+                        titlename:$("#title").val(),
+                        profile:$("#profile").val()
+                    },
+                    type:'post',
+                    success:function(msg){
+                        alert("添加成功！")
+                    },
+                    error:function (err){
+                        alert(err);
+                    }
+                });
+            });
         });
     </script>
          <!-- /. PAGE WRAPPER  -->
@@ -118,18 +139,6 @@
             $("body").append(sc);
         });
 
-        // $(".border").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(this).css("background-color",color);
-        // }).dblclick(function () {
-        //     var changecolor = "white"
-        //     $(this).css("background-color",changecolor);
-        // })
-        //
-        // $("#all").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(".border").css("background-color",color);
-        // })
         $(".border").click(function () {
             if ($(this).hasClass("bgcolor")) {
                 $(this).removeClass("bgcolor");
