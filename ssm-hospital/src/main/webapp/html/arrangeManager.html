@@ -14,6 +14,7 @@
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <!-- TABLE STYLES-->
     <link href="../assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 </head>
 <body>
     <div id="wrapper">
@@ -41,15 +42,36 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                    <div class="form-inline">
-                                        <label>年级：</label>
-                                        <input class="form-control" placeholder="请输入年级">
-                                    </div>
+                                        <div class="form-inline">
+                                            <label>门诊：</label>
+                                            <input class="form-control" placeholder="请输入门诊">
+                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class=" form-inline">
-                                            <label>班级：</label>
-                                            <input class="form-control" placeholder="请输入班级">
+                                            <label>医生姓名：</label>
+                                            <input class="form-control" placeholder="请输入医生姓名">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!--<div class=" form-inline">-->
+                                            <!--<label>开始日期：</label>-->
+                                            <!--<input class="form-control" placeholder="请输入开始查询日期">-->
+                                        <!--</div>-->
+
+                                            <!--指定 date标记-->
+                                            <div class='input-group date form-inline' id='datetimepicker1'>
+                                                <input type='text' class="form-control" placeholder="请输入开始查询日期"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class=" form-inline">
+                                            <input type="button" class="btn btn-success" id="btnsubmit" value="确认查询">
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +80,7 @@
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>节/星期</th>
+                                            <th>时段/星期</th>
                                             <th>一</th>
                                             <th>二</th>
                                             <th>三</th>
@@ -70,7 +92,7 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>一</td>
+                                            <td>上午</td>
                                             <td>Mark</td>
                                             <td>Otto</td>
                                             <td>@mdo</td>
@@ -80,7 +102,7 @@
                                             <td>@mdo</td>
                                         </tr>
                                         <tr>
-                                            <td>二</td>
+                                            <td>下午</td>
                                             <td>Mark</td>
                                             <td>Otto</td>
                                             <td>@mdo</td>
@@ -89,26 +111,7 @@
                                             <td>@mdo</td>
                                             <td>@mdo</td>
                                         </tr>
-                                        <tr>
-                                            <td>三</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>四</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                        </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -132,10 +135,17 @@
     <!-- DATA TABLE SCRIPTS -->
     <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
     <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
+    <script src="../assets/js/moment-with-locales.min.js"></script>
+    <script src="../assets/js/bootstrap-datetimepicker.min.js"></script>
 
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+            $('#datetimepicker1').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.local('zh-cn'),
+            });
+
         });
     </script>
          <!-- /. PAGE WRAPPER  -->
