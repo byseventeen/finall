@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path="/department")
@@ -78,7 +81,7 @@ public class DepartmentController {
         return "fine!";
     }
 
-    //多对一，查询所有门诊，并查出科室的所有信息
+    //多对一。门诊多，门诊类型一，多对一，查询所有门诊，并查出科室的所有信息
     @ResponseBody
     @RequestMapping("/find.action")
     public List<Department> findAllDepartment(){
@@ -87,13 +90,23 @@ public class DepartmentController {
         return departmentList;
     }
 
-    //多对一，传一个门诊id过来，根据id找到门诊和科室信息
+    //多对一。门诊多，门诊类型一，传一个门诊id过来，根据id找到门诊和科室信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findDepartmentById.action")
     public List<Department> findDepartmentById(int departmentid){
         List<Department> findlist=departmentService.findDepartmentById(departmentid);
         return findlist;
+    }
+
+    //根据门诊id查找所有该门诊下的信息 包括医生信息
+    @ResponseBody
+    @CrossOrigin
+    @RequestMapping("/findDepartmentsById.action")
+    public List findAllDepartments() {
+
+        List<Department> departmentList=departmentService.findDepartmentsById(11);
+        return departmentList;
     }
 
 

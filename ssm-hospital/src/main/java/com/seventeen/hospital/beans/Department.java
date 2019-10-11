@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import java.util.List;
 
 
 @Data
@@ -20,4 +21,6 @@ public class Department {
     private String deprofile;
     @Transient
     private Departmenttype department_type;
+    @Transient
+    private List<Doctor> doctors;
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface DepartmenttypeMapper extends Mapper<Departmenttype> {
-
+    //一对多，根据科室id查询该科室的所有门诊以及门诊信息
     @Select("select * from departmenttype where id = #{departmenttypeId}")
     @Results({
             @Result(property="departmenttypeid", column="id"),

@@ -25,4 +25,20 @@ public interface DoctorMapper extends Mapper<Doctor> {
             @Result(property = "profile",column = "profile"),
     })
     List<Doctor> selectDoctorById(int doctorid);
+
+
+    //根据门诊id查询所有该id医生信息
+    @Select("select * FROM doctor WHERE doctor.department_id=#{departmentid}")
+    @Results({
+            @Result(property = "doctorid",column = "id"),
+            @Result(property = "dname",column = "dname"),
+            @Result(property = "gender",column = "gender"),
+            @Result(property = "cardId",column = "card_id"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "phone",column = "phone"),
+            @Result(property = "departmentId",column = "department_id"),
+            @Result(property = "titleId",column = "title_id"),
+            @Result(property = "profile",column = "profile"),
+    })
+    List<Doctor> selectDoctorBydepId(int departmentid);
 }

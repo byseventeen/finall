@@ -24,7 +24,17 @@
             text-align: center;
         }
         .bgcolor{
-            background-color: #BBFFE4;
+            background-color: #5cb85c;
+            border-color: #1cc09f;
+        }
+        .btn-submit{
+            width: 68px;
+            color:#ffffff;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+        .opstyle{
+            height: 50px;
         }
     </style>
 </head>
@@ -51,40 +61,45 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-inline">
-                                            <label>课名</label>
-                                            <input class="form-control" placeholder="请输入课名" name="course">
+                                            <label>医生门诊</label>
+                                            <input class="form-control" id="department" placeholder="请输入医生门诊" name="course">
                                         </div>
                                         <br>
                                         <div class="form-inline">
-                                            <label>年级</label>
-                                            <input class="form-control" placeholder="请输入年级" name="grade">
+                                            <label>医生工号</label>
+                                            <input class="form-control" id="card-id" placeholder="请输入医生工号" name="grade">
                                         </div>
                                         <br>
                                         <div class=" form-inline">
-                                            <label>班级</label>
-                                            <input class="form-control" placeholder="请输入班级" name="class">
+                                            <label>医生姓名</label>
+                                            <input class="form-control" id="doctor-name" placeholder="请输入医生姓名" name="class">
                                         </div>
                                         <br>
                                         <div class="form-inline">
-                                            <label>节数</label>
-                                            <input class="form-control" placeholder="请输入节数" name="address">
+                                            <label>坐诊时段</label>
+                                            <select class="form-control" id="arrange-time" style="padding: 6px 12px; color:#555555;">
+                                                <option value="上午">上午</option>
+                                                <option value="下午">下午</option>
+                                            </select>
                                         </div>
                                         <br>
-                                        <div class="btn-group">
-                                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">学期 <span class="caret"></span></button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">第一学期</a></li>
-                                                <li><a href="#">第二学期</a></li>
-                                            </ul>
+                                        <div class=" form-inline">
+                                            <button class="btn btn-submit">添加</button>
                                         </div>
                                     </div>
                                     <div class="col-md-9" style="margin-top: -35px">
                                         <div style="">
                                             <div class="form-group">
-                                                <label>周数选择</label>
+                                                <label>坐诊日期选择</label>
                                             </div>
                                             <div class="form-group">
                                                 <button class="btn btn-success"  id="all">全选</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <select class="form-control arrange-momth" style="width:100px;padding: 6px 12px; color:#555555;">
+                                                    <option class="opstyle" id="option1" value="">本月</option>
+                                                    <option class="opstyle" id="option2" value="">下月</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-md-1">
@@ -122,6 +137,17 @@
                                                 <div class="border">24</div>
                                                 <div class="border">25</div>
                                             </div>
+                                            <div class="col-md-1">
+                                                <div class="border">26</div>
+                                                <div class="border">27</div>
+                                                <div class="border">28</div>
+                                                <div class="border">29</div>
+                                                <div class="border">30</div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="border">31</div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -137,6 +163,7 @@
     <!-- JS Scripts-->
     <!-- jQuery Js -->
     <script src="../assets/js/jquery-1.10.2.js"></script>
+
     <!-- Bootstrap Js -->
     <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Metis Menu Js -->
@@ -149,6 +176,59 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable();
+
+            var now = new Date();
+            var year = now.getFullYear(); //得到年份
+            var month = now.getMonth();//得到月份
+            month = month + 1;
+            var nextm="";
+            var thism=""
+            if (month < 10){
+                 thism = "0" + month;
+                nextm=month+1<10?"0"+(month+1): month+1;
+            }
+            var thisMonth=year+"-"+thism;
+            var nextMonth=year+"-"+nextm;
+            $("#option1").val(thisMonth);
+            $("#option2").val(nextMonth);
+
+            $(".btn-submit").click(function () {
+                var arrangedate="";
+                var bgValue="";
+                var arr=[];
+                var arrangeTime=$(".arrange-time").val();
+                var arrangeMonth=$(".arrange-momth").val();
+                for (var i=0;i<31;i++){
+                    bgValue=Number($($(".bgcolor")[i]).text());
+                    var day=0<bgValue&&bgValue<10?"0"+$($(".bgcolor")[i]).text():$($(".bgcolor")[i]).text();
+                    if (day!=""&&day!="0"){
+                        arrangedate=arrangeMonth+"-"+day;
+                        arr.push(arrangedate);
+                    }
+                }
+
+                $.ajax({
+                    url:'/arrangement/addArrangement.action',
+                    async:false,
+                    data:{
+                        department:$("#department").val(),
+                        cardId: $("#card-id").val(),
+                        doctorName:$("#doctor-name").val(),
+                        arrangeTime:$("#arrange-time").val(),
+                        arrangeDate:arr
+                    },
+                    type:'post',
+                    success:function(TopFloorMap){
+                        $("#department").val(TopFloorMap.departmentName);
+                        $("#doctorName").val(TopFloorMap.doctorName);
+                    },
+                    error:function (err){
+                        alert(err);
+                    }
+                });
+               // console.log(arr)
+            })
+
         });
     </script>
          <!-- /. PAGE WRAPPER  -->
@@ -162,18 +242,6 @@
             $("body").append(sc);
         });
 
-        // $(".border").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(this).css("background-color",color);
-        // }).dblclick(function () {
-        //     var changecolor = "white"
-        //     $(this).css("background-color",changecolor);
-        // })
-        //
-        // $("#all").click(function () {
-        //     var color = "#BBFFE4";
-        //     $(".border").css("background-color",color);
-        // })
         $(".border").click(function () {
             if ($(this).hasClass("bgcolor")) {
                 $(this).removeClass("bgcolor");

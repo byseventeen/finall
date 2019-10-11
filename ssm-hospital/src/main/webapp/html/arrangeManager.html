@@ -15,6 +15,11 @@
     <!-- TABLE STYLES-->
     <link href="../assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <link href="../assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <style>
+        .demo-input{padding-left: 10px; height: 38px; min-width: 262px;line-height: 38px;border:1px solid #e6e6e6; background-color: #fff;border-radius: 2px;}
+
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -39,35 +44,35 @@
                                 <div class="form-group">
                                     <a href="arrangeAdd.html"><button class="btn btn-success">添加排班表</button></a>
                                     <a href="arrangeModify.html"><button class="btn btn-success">修改排班表</button></a>
+                                    <a href="arrangeDelete.html"><button class="btn btn-success">删除排班表</button></a>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-inline">
-                                            <label>门诊：</label>
-                                            <input class="form-control" placeholder="请输入门诊">
+                                            <label>医生门诊：</label>
+                                            <input class="form-control" placeholder="请输入门诊" id="department">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-5">
                                         <div class=" form-inline">
                                             <label>医生姓名：</label>
-                                            <input class="form-control" placeholder="请输入医生姓名">
+                                            <input class="form-control" placeholder="请输入医生姓名" id="dname">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <!--<div class=" form-inline">-->
-                                            <!--<label>开始日期：</label>-->
-                                            <!--<input class="form-control" placeholder="请输入开始查询日期">-->
-                                        <!--</div>-->
 
-                                            <!--指定 date标记-->
-                                            <div class='input-group date form-inline' id='datetimepicker1'>
-                                                <input type='text' class="form-control" placeholder="请输入开始查询日期"/>
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-
-
+                                </div>
+                                <div class="row" style="margin-top: 18px;">
+                                    <div class="col-md-4">
+                                        <div class=" form-inline">
+                                            <label>医生工号：</label>
+                                            <input class="form-control" placeholder="请输入医生工号" id="dcardId">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class=" form-inline">
+                                            <label>开始日期：</label>
+                                            <input class="form-control demo-input" id="dDate" placeholder="请输入开始查询日期">
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class=" form-inline">
@@ -81,35 +86,35 @@
                                         <thead>
                                         <tr>
                                             <th>时段/星期</th>
-                                            <th>一</th>
-                                            <th>二</th>
-                                            <th>三</th>
-                                            <th>四</th>
-                                            <th>五</th>
-                                            <th>六</th>
-                                            <th>日</th>
+                                            <th class="weekdays"></th>
+                                            <th class="weekdays"></th>
+                                            <th class="weekdays"></th>
+                                            <th class="weekdays"></th>
+                                            <th class="weekdays"></th>
+                                            <th class="weekdays"></th>
+                                            <th class="weekdays"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>上午</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
+                                            <th>上午</th>
+                                            <td class="morning"></td>
+                                            <td class="morning"></td>
+                                            <td class="morning"></td>
+                                            <td class="morning"></td>
+                                            <td class="morning"></td>
+                                            <td class="morning"></td>
+                                            <td class="morning"></td>
                                         </tr>
                                         <tr>
-                                            <td>下午</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
+                                            <th>下午</th>
+                                            <td class="afternoon"></td>
+                                            <td class="afternoon"></td>
+                                            <td class="afternoon"></td>
+                                            <td class="afternoon"></td>
+                                            <td class="afternoon"></td>
+                                            <td class="afternoon"></td>
+                                            <td class="afternoon"></td>
                                         </tr>
 
                                         </tbody>
@@ -135,18 +140,95 @@
     <!-- DATA TABLE SCRIPTS -->
     <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
     <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
-    <script src="../assets/js/moment-with-locales.min.js"></script>
-    <script src="../assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../assets/js/layDate-v5.0.9/laydate/laydate.js"></script>
+    <!--<script src="../assets/js/moment-with-locales.min.js"></script>-->
+    <!--<script src="../assets/js/bootstrap-datetimepicker.min.js"></script>-->
 
     <script>
         $(document).ready(function () {
+            //默认参数设置
+            var strdate= "";
+            var strArr=[];
+            var weekday=new Array(7)
+            weekday[0]="星期天"
+            weekday[1]="星期一"
+            weekday[2]="星期二"
+            weekday[3]="星期三"
+            weekday[4]="星期四"
+            weekday[5]="星期五"
+            weekday[6]="星期六"
+            //对日期加一
+            function addDate(strdate){
+                var mm= strdate;
+                var arr = mm.split("-");
+                var newdt = new Date(Number(arr[0]),Number(arr[1])-1,Number(arr[2])+1);
+                var mm=(newdt.getMonth()+1)>9?(newdt.getMonth()+1):"0"+(newdt.getMonth()+1);
+                var dd=newdt.getDate()>9?newdt.getDate():"0"+newdt.getDate();
+                var repnewdt = newdt.getFullYear() + "-" +  mm+ "-" + dd;
+                return repnewdt;
+            }
+            //把日期转换为星期
+            function toweekdays(strdate){
+                var d=new Date(strdate);
+                var weekdays=weekday[d.getDay()];
+                return weekdays;
+            }
+
             $('#dataTables-example').dataTable();
-            $('#datetimepicker1').datetimepicker({
-                format: 'YYYY-MM-DD',
-                locale: moment.local('zh-cn'),
+
+            $('#btnsubmit').click(function (){
+                strdate= $("#dDate").val();
+                $(".weekdays")[0].innerText=strdate+"("+toweekdays(strdate)+")";
+                strArr.push(strdate);
+                //循环显示日期+星期
+                for (var i=1;i<7;i++){
+                    var dd=addDate(strdate);
+                    var weekdays=toweekdays(dd);
+                    strArr.push(dd);
+                    $(".weekdays")[i].innerText=dd+"("+weekdays+")";
+                    strdate=dd;
+                }
+                $.ajax({
+                    url:'/arrangement/findArrangementbyCId.action',
+                    async:false,
+                    data:{
+                        did: $("#did").val(),
+                        dname:$("#dname").val(),
+                        cardId:$("#dcardId").val(),
+                        departmentname:$("#department").val(),
+                        dDate:$("#dDate").val(),
+                    },
+                    type:'post',
+                    success:function(TopFloorMap){
+                        $("#dname").val(TopFloorMap['doctorName']);
+                        $("#department").val(TopFloorMap['departmentName'])
+                        for (var i=0;i<TopFloorMap['list'].length;i++){
+                            for(var j=0;j<strArr.length;j++){
+                                if (TopFloorMap['list'][i].arrangeStrTime==strArr[j]){
+                                    if (TopFloorMap['list'][i].arrangeName=="上午"){
+                                        $(".morning")[j].innerText="坐诊";
+                                    }
+                                    else if(TopFloorMap['list'][i].arrangeName=="下午"){
+                                        $(".afternoon")[j].innerText="坐诊";
+                                    }
+                                }
+                            }
+                        }
+                        strArr.length=0;
+                    },
+                    error:function (err){
+                        alert(123);
+                    }
+                });
             });
 
         });
+
+        //layui日历插件
+        lay('#version').html('-v'+laydate.v),
+            laydate.render({
+                elem:'#dDate'
+            });
     </script>
          <!-- /. PAGE WRAPPER  -->
         </div>

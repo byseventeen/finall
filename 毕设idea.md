@@ -298,3 +298,20 @@ public interface DepartmentMapper extends Mapper<Department> {
 一般来说可以实例化，创建对象，再用对象调用方法。
 
 但再ssm中因为是自动注入的，所以需要在要调用东西的controller里面注入另一个controller对象，再用对象调用方法。实例化对象方法不一样。
+
+一般来说可以在一个controller调用service方法，只需要在该controller里注入需要用到的service
+
+
+
+##### 两个for循环把电脑跑死
+
+检查是否是for循环里面有拼写错误，比如说把i写成j
+
+
+
+##### 取出后端传过来的list对象的东西[object，object]
+
+``` javascript
+TopFloorMap['list'][i].arrangeStrTime
+```
+

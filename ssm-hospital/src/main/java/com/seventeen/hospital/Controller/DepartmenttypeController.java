@@ -21,6 +21,7 @@ public class DepartmenttypeController {
     @Resource(name = "departmenttypeService")
     private IDepartmenttypeService departmenttypeService;
 
+    //查找depaertmenttype下的所有数据
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findAllDepartmenttype.action")
@@ -32,6 +33,7 @@ public class DepartmenttypeController {
         return findlist;
     }
 
+    //根据设置门诊类型的任意属性查询某门诊类型信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findOneDepartmenttype.action")
@@ -45,6 +47,7 @@ public class DepartmenttypeController {
         return findlist;
     }
 
+    //添加门诊类型
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/addDepartmenttype.action")
@@ -55,6 +58,7 @@ public class DepartmenttypeController {
         return "fine!";
     }
 
+    //更新门诊类型
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/updateDepartmenttype.action")
@@ -66,6 +70,7 @@ public class DepartmenttypeController {
         return "fine!";
     }
 
+    //删除门诊类型
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/deleteDepartmenttype.action")
@@ -74,6 +79,7 @@ public class DepartmenttypeController {
         return "fine!";
     }
 
+    //根据门诊类型查找所有门诊
     @ResponseBody
     @CrossOrigin
     @RequestMapping("/findDepartmentByDetypeId.action")
