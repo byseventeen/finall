@@ -50,4 +50,15 @@ public interface ArrangementMapper extends Mapper<Arrangement> {
     @Delete("delete from arrangement WHERE doctor_id = #{did} and arrange_date=#{arrangeDate} and arrange_name=#{arrangeName};")
     int deleteArrangement(Map map);
 
+    //多对一。医生多，根据医生的id查出医生的门诊信息等
+    @Select("select * FROM arrangement WHERE arrangement.id=#{arrangementId}")
+    @Results({
+            @Result(property="id", column="id"),
+            @Result(property="doctorId", column="doctor_id"),
+            @Result(property="departmentId", column="department_id"),
+            @Result(property="arrangeDate", column="arrange_date"),
+            @Result(property="arrangeName", column="arrange_name"),
+    })
+    List<Arrangement> findArrangementbyId(int arrangementId);
+
 }

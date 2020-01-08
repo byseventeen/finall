@@ -102,10 +102,11 @@ public class DepartmentController {
     //根据门诊id查找所有该门诊下的信息 包括医生信息
     @ResponseBody
     @CrossOrigin
-    @RequestMapping("/findDepartmentsById.action")
-    public List findAllDepartments() {
-
-        List<Department> departmentList=departmentService.findDepartmentsById(11);
+    @RequestMapping(path="/findDepartmentsById.action",method= RequestMethod.POST)
+    public List findAllDepartments(HttpServletRequest request) {
+        int departmentId= Integer.parseInt(request.getParameter("departmentId"));
+        List<Department> departmentList=departmentService.findDepartmentsById(departmentId);
+        System.out.println(departmentList);
         return departmentList;
     }
 

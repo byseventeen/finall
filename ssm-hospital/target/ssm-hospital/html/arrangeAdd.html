@@ -187,6 +187,10 @@
                  thism = "0" + month;
                 nextm=month+1<10?"0"+(month+1): month+1;
             }
+            else{
+                thism =month;
+                nextm=month+1;
+            }
             var thisMonth=year+"-"+thism;
             var nextMonth=year+"-"+nextm;
             $("#option1").val(thisMonth);

@@ -27,9 +27,6 @@ public class DepartmenttypeController {
     @RequestMapping(path = "/findAllDepartmenttype.action")
     public List<Departmenttype> findAll(){
         List<Departmenttype> findlist=departmenttypeService.findAll();
-        /*for (Departmenttype t:findlist) {
-            System.out.println(t);
-        }*/
         return findlist;
     }
 
@@ -79,25 +76,20 @@ public class DepartmenttypeController {
         return "fine!";
     }
 
-    //根据门诊类型查找所有门诊
+    //根据门诊类型查找所有门诊,菜单处查找所有的门诊类型以及门诊的信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping("/findDepartmentByDetypeId.action")
-//    public List<Departmenttype> findAllDepartment() {
     public List findAllDepartment() {
 
-        //Map topFloorMap=new HashMap();
         List secondFloorList=new ArrayList();
-        //topFloorMap.put("headerData",secondFloorList);
         int a;
-        List<Departmenttype> findlist = findAll();
+        List<Departmenttype> findlist = findAll();  //查找门诊类型的所有信息
 
         for (int i = 0; i < findlist.size(); i++) {
-            System.out.println(findlist.get(i).getDepartypementname());
             a = findlist.get(i).getDepartmenttypeid();
-
+            //根据门诊类型id查找该类型下所有门诊信息
             List<Departmenttype> tempDepartmenttypeList=departmenttypeService.findDepartmentBytypeId(a);
-            System.out.println( departmenttypeService.findDepartmentBytypeId(a));
 
             Map thirdFloorMap=new HashMap();
             thirdFloorMap.put("name","");
@@ -106,15 +98,20 @@ public class DepartmenttypeController {
             secondFloorList.add(thirdFloorMap);
 
             List fourthList=new ArrayList();
-            for (Departmenttype d:tempDepartmenttypeList)
-                for (int j=0;j<d.getDepartments().size();j++)
-                    fourthList.add(d.getDepartments().get(j).getDepartmentname());
 
+
+            for (Departmenttype d:tempDepartmenttypeList) {
+                for (int j = 0; j < d.getDepartments().size(); j++) {
+                    Map fifthMap=new HashMap();
+                    fifthMap.put("departmentName",d.getDepartments().get(j).getDepartmentname());
+                    fifthMap.put("departmentId",d.getDepartments().get(j).getDepartmentid());
+                    fourthList.add(fifthMap);
+                }
+            }
             thirdFloorMap.put("list",fourthList);
             thirdFloorMap.put("name",findlist.get(i).getDepartypementname());
 
         }
-      //  System.out.println(topFloorMap);
         return secondFloorList;
     }
 }

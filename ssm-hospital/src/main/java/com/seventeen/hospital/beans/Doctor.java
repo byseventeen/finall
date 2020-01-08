@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.List;
 
 @Data
 public class Doctor {
@@ -21,4 +23,8 @@ public class Doctor {
     @Column(name = "title_id")
     private Integer titleId;
     private String profile;
+    @Transient
+    private Title titles;
+    @Transient
+    private Department departments;
 }

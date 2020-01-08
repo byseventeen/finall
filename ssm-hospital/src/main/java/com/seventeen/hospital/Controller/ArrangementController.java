@@ -55,6 +55,7 @@ public class ArrangementController {
     public Map findArrangementbyCId(HttpServletRequest request) throws ParseException {
         String cardId= request.getParameter("cardId");
         String checkedDate=request.getParameter("dDate");
+        System.out.println(checkedDate);
         //根据cardId锁定某个医生并且拿到信息
         Doctor doctor=new Doctor();
         doctor.setCardId(cardId);

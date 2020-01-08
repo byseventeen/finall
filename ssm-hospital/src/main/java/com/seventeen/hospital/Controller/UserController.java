@@ -32,14 +32,16 @@ public class UserController {
     //根据用户id查找某个用户
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(path = "/findOneUser.action")
+    @RequestMapping(path = "/findOneUser.action",method= RequestMethod.POST)
     public List<User> findOneUser(HttpServletRequest request){
         System.out.println("111111");
         User user=new User();
-        user.setUserid(Integer.valueOf(request.getParameter("userid")));
+        int userId= Integer.parseInt(request.getParameter("userId"));
+        //user.setUserid(Integer.valueOf(request.getParameter("userid")));
+        user.setUserid(userId);
 
         List<User> findList= userService.find(user);
-
+        System.out.println(findList);
         return findList;
     }
 
@@ -70,6 +72,19 @@ public class UserController {
         user.setUsername(request.getParameter("username"));
         user.setGender(request.getParameter("gender"));
         user.setCardId(request.getParameter("cardId"));
+        user.setPhone(request.getParameter("phone"));
+        userService.update(user);
+        String msg="success";
+        return msg;
+    }
+
+    //更新某个用户
+    @CrossOrigin
+    @RequestMapping(path = "/updateUserphone.action",method= RequestMethod.POST)
+    public String updateUserPhone(HttpServletRequest request){
+        System.out.println("111111");
+        User user=new User();
+        user.setUserid(Integer.valueOf(request.getParameter("userid")));
         user.setPhone(request.getParameter("phone"));
         userService.update(user);
         String msg="success";
