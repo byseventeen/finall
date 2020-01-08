@@ -6,14 +6,13 @@
       <div class="col-md-10">
         <div class="book-choose col-md-3">
           <ul>
-            <!-- 循环数据在点击调用changeli方法时将当前索引和本条数据传进去,并使用当前数据show的bool值添加或移除样式 -->
+            <!-- 循环数据在点击调用changeli方法时将当前索引和本条数据传进去,并使用当前数据show的bool值添加或移除样式 展示门诊类型-->
             <li :class="[{active:item.show}]" @click="changeli(index,item)" v-for="(item,index) in headerData">
-              <!-- 在这里打印出boll值方便查看 -->
               {{item.name}}
               <!-- 判断当前这条数据的bool值如果是true就打开二级菜单,如果是false就关闭二级菜单 -->
               <ul v-show="item.show">
-                <!-- 循环二级菜单数据并使用.stop阻止冒泡 -->
-                <li v-for="(a,index) in item.list" v-on:click.stop="doThis(index)">{{a}}</li>
+                <!-- 循环二级菜单数据并使用.stop阻止冒泡 展示门诊-->
+                <li v-for="(a,index) in item.list" v-on:click.stop="takeInfo(a.departmentId)">{{a.departmentName}}</li>
               </ul>
             </li>
           </ul>
@@ -21,22 +20,22 @@
         <div class="book-content col-md-9">
           <div class="department-descr">
             <span>科室介绍：</span>
-            <p>呼吸内科是广州医学院硕士研究生培养点，设有2个病区，64张床位，对慢性阻塞性肺病、肺癌、支气管哮喘和急性呼吸衰竭等疾病的治疗卓有成效。梯队建设：呼吸内科现有主任医师2人，副主任医师3人，主治医师3人，专科住院医师3人，硕士生导师1人，博士1人，在读博士1人，硕士3人。专家介绍：学科带头人：赵子文，男，主任医师，现任广州市第一人民医院大内科副主任兼呼吸内科主任，吉林大学及广州医学院兼职教授、硕士研究生导师，广东省医学会呼吸病分会副主任委员和结核病分会常委，广州市抗癌协会理事，全国和广东省五一奖章获得者。</p>
+            <p class="descr">{{descr}}</p>
           </div>
-          <div class="doctor-list">
+          <div class="doctor-list" v-for="(a,index) in doctors" >
             <div class="doctors">
               <div class="doctor-left">
                 <div class="doctor-image">
                   <img src="../assets/images/doctors/misszhang.jpg">
                 </div>
                 <div class="doctor-descr">
-                  <span><a href="#">张溪林</a></span><br>
-                  <span>主任医生</span><br>
-                  <p>简介：主任医师。1982年毕业于贵州遵义医学院临床医疗系，毕业后一直在广州市第一人民医.</p>
+                  <span><a href="#">{{doctors[index].dname}}</a></span><br>
+                  <span>{{doctors[index].titles.titlename}}</span><br>
+                  <p>{{doctors[index].profile}}</p>
                 </div>
               </div>
               <div class="doctor-right">
-                <button class="doctor-butt" @click="takebooktime()">查看排班表</button>
+                <button class="doctor-butt"  v-on:click="changeDate(a,index)" >查看排班表</button>
               </div>
             </div>
             <div class="doctor-time">
@@ -53,47 +52,48 @@
                 </tr>
                 <tr>
                   <th>上午</th>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="morning"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
                 </tr>
                 <tr>
                   <th>下午</th>
-                  <td class="canbook">
-                    <button class="bookbut">预约</button>
-                  </td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
-                  <td class="canbook"></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
+                  <td class="afternoon"><button class="bookbut"  v-on:click="book($event,a,index);">预约</button></td>
                 </tr>
               </table>
-
-
             </div>
             <hr/>
-            <div class="doctors">
-              <div class="doctor-left">
-                <div class="doctor-image">
-                  <img src="../assets/images/doctors/misszhang.jpg">
-                </div>
-                <div class="doctor-descr">
-                  <span><a href="#">张溪林</a></span><br>
-                  <span>主任医生</span><br>
-                  <p>简介：主任医师。1982年毕业于贵州遵义医学院临床医疗系，毕业后一直在广州市第一人民医.</p>
-                </div>
-              </div>
-              <div class="doctor-right">
-                <button class="doctor-butt">查看排班表</button>
-              </div>
-              <hr/>
+          </div>
+          <div id="dialogBg"></div>
+          <div id="dialog" class="animated">
+            <img class="dialogIco" width="50" height="50" src="images/ico.png" alt="" />
+            <div class="dialogTop">
+              <a href="javascript:;" class="claseDialogBtn">关闭</a>
             </div>
+            <table class="timeTable">
+              <tr>
+                <th>预约时间</th>
+                <th>总号源</th>
+                <th>剩余号源</th>
+                <th>操作</th>
+              </tr>
+              <tr v-for="(x,index) in bookTime">
+                <td>{{bookTime[index].startTime}}-{{bookTime[index].stopTime}}</td>
+                <td>{{bookTime[index].numAmount}}</td>
+                <td>{{bookTime[index].numSurplus}}</td>
+                <td><button class="ysubmit" v-on:click="StratBook($event,x,index); ">预约</button></td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
@@ -111,58 +111,23 @@
         components: {mheader},
       data() {
         return {
-          headerData: [/*{
-            name:  "",
-            list: [],
-            show: false
-          }, {
-            name: "",
-            list: [],
-            show: false
-          }, {
-            name: '',
-            list: [],
-            show: false
-          }, {
-            name: '',
-            list: ['子集', '子集', '子集', '子集', '子集'],
-            show: false
-          }, {
-            name: '',
-            list: ['子集', '子集', '子集', '子集', '子集'],
-            show: false
-          },{
-            name: '',
-            list: ['子集', '子集', '子集', '子集', '子集'],
-            show: false
-          },{
-            name: '',
-            list: ['子集', '子集', '子集', '子集', '子集'],
-            show: false
-        }*/],
-          dptypelist:[],
+          headerData: [],
           detypenamelist:[],
-          aa:[],
-          listdata:[],
-          listreturn:[]
+          descr: '',
+          doctors: [],
+          titles: [],
+          date: [],
+          nextdate: [],
+          bookTime:[],
+          bookCardId:'',
+          bookDate:'',
+          bookTimeName:'',
         }
       },
       mounted(){
-          this.changeDate(),
           this.findDepartmenttype()
       },
       methods: {
-          getlist(){
-            axios.post("/api/department/findDepartmentByDetypeId.action",this.$qs.stringify(this.listdata)).then(res => {
-
-              this.listreturn.push(res.data[0].departmentname);
-              // this.headerData[i].list=res.data;
-              console.log(this.listreturn)
-            }).catch(error => {
-              console.log(error);
-            });
-          },
-
         findDepartmenttype(){
           this.$http.get('http://localhost:8080/departmenttype/findDepartmentByDetypeId.action')
             .then(res => {
@@ -173,7 +138,6 @@
             })
 
         },
-
         changeli: function(ind, item) {
           // 先循环数据中的show将其全部置为false,此时模板里的v-if判断生效关闭全部二级菜单,并移除样式
           this.headerData.forEach(i => {
@@ -184,16 +148,36 @@
           });
           // 取反(true或false)
           item.show = !item.show;
-          console.log(item.name)
         },
-        doThis: function(index) {
-          alert(index)
+        takeInfo: function(departmentId) {
+          var data={
+            departmentId : departmentId
+          }
+          axios.post("/api/department/findDepartmentsById.action",this.$qs.stringify(data)).then(res => {
+            if(res.data!=null){
+              this.descr=res.data[0].deprofile;
+              this.doctors=res.data[0].doctors;
+              this.titles=res.data[0].doctors
+            }
+          }).catch(error => {
+            console.log(error);
+          });
         },
-        changeDate() {
+        changeDate(a,index) {
+          var bt=document.getElementsByClassName("doctor-time")[index];
+          if(bt.style.display=="none"){
+            bt.style.display="block";
+          }
+          else {
+            bt.style.display="none";
+          }
           var date = new Date();
+          var year;
           var month;
           var day;
           var currentDay;
+          var currentDate;
+          var bt=document.getElementsByClassName("booktable")[index];
           for (var i=0 ;i<7;i++){
             if (i<=0){
               currentDay = new Date();
@@ -201,18 +185,114 @@
               currentDay = new Date(date.getTime()+i*24*60*60*1000);
             }
             day = currentDay.getDate();
+            if(day<10){
+              day="0"+day;
+            }else{
+              day=day;
+            }
             month = currentDay.getMonth() + 1;
-            document.getElementsByClassName("date1")[i].innerHTML = month + "-" + day;
-      }
+            year=currentDay.getFullYear();
+            currentDate=year+ "-" + month + "-" + day;
+            bt.getElementsByClassName("date1")[i].innerHTML =currentDate;
+            this.date.push(currentDate);
+            this.nextdate.push(currentDate);
+          }
+
+          //根据医生的证件id查找医生排班
+          var currenttDay = new Date();
+          var tyear=currenttDay.getFullYear();
+          var tday = currenttDay.getDate();
+          var tmonth = currenttDay.getMonth() + 1;
+          var dDate=tyear+ "-" +tmonth + "-" + tday;
+          var data={
+            cardId : a.cardId,
+            dDate: dDate,
+          }
+          axios.post("/api/arrangement/findArrangementbyCId.action",this.$qs.stringify(data)).then(res => {
+            if(res.data!=null){
+              for (var i=0;i<res.data['list'].length;i++){
+                for(var j=0;j<this.date.length;j++){
+                  if (res.data['list'][i].arrangeStrTime==this.date[j]){
+                    if (res.data['list'][i].arrangeName=="上午"){
+                      $(".morning")[j].getElementsByClassName("bookbut")[0].style.display="block";
+                    }
+                    else if(res.data['list'][i].arrangeName=="下午"){
+                      $(".afternoon")[j].getElementsByClassName("bookbut")[0].style.display="block";
+                    }
+                  }
+                }
+              }
+              this.date.length=0;
+            }
+          }).catch(error => {
+            console.log(error);
+          });
     },
-        takebooktime(){
-          var bt=document.getElementsByClassName("doctor-time")[0];
-          if(bt.style.display=="none"){
-            bt.style.display="block";
+        book(btn,a,parentIndex){
+          var elt=btn.target.parentElement;
+          var index= $(elt).index($(elt).parentNode)-1;
+          var bookdate=this.nextdate[index];
+          var bookTime;
+          if(elt.getAttribute("class")=="morning"){
+            bookTime="上午";
           }
-          else {
-            bt.style.display="none";
+          else if(elt.getAttribute("class")=="afternoon"){
+            bookTime="下午";
           }
+          else{
+            bookTime="";
+          }
+          var data={
+            cardId : a.cardId,
+            bookdate : bookdate,
+            bookTime: bookTime,
+          }
+          //根据医生的证件号码和预约时间段查询医生的该时段可预约时间和剩下可预约数
+
+          //根据bookdate和bookTime去添加预约
+          this.bookCardId=a.cardId;
+          this.bookTimeName=bookTime;
+          this.bookDate=bookdate;
+           /*console.log(a.cardId)
+           console.log(bookdate)
+           console.log(bookTime)*/
+          axios.post("/api/arrangeTime/selectAllBydCardId.action",this.$qs.stringify(data)).then(res => {
+            this.bookTime=res.data;
+          }).catch(error => {
+            console.log(error);
+          });
+
+          $('.afternoon').click(function(){
+            var className = $(this).attr('class');
+            $('#dialogBg').fadeIn(1000);
+            $('#dialog').removeAttr('class').addClass('animated '+className+'').fadeIn();
+          });
+          $('.morning').click(function(){
+            var className = $(this).attr('class');
+            $('#dialogBg').fadeIn(1000);
+            $('#dialog').removeAttr('class').addClass('animated '+className+'').fadeIn();
+          });
+
+          //关闭弹窗
+          $('.claseDialogBtn').click(function(){
+            $('#dialogBg').fadeOut(300,function(){
+              $('#dialog').addClass('bounceOutUp').fadeOut();
+            });
+          });
+        },
+        StratBook($event,x,index){
+          //开始预订
+            console.log(x.startTime)
+            console.log(index)
+            console.log(this.bookDate+this.bookCardId+this.bookTimeName)
+          var data={
+            cardId : this.bookCardId,
+            bookdate : this.bookDate,
+            bookTimeName: this.bookTimeName,
+            startTime: x.startTime,
+            stopTime:x.stopTime,
+          }
+          alert("预定成功！")
         }
       }
     }
@@ -314,7 +394,7 @@
     width: 96%;
     height: 150px;
     text-align: center;
-    display: block;
+    display: none;
   }
   .booktable{
     width: 100%;
@@ -334,9 +414,199 @@
     background-color: #5F9EA0;
   }
   .bookbut{
+    display: none;
     width:60px;
     height: 30px;
     background-color: #5F9EA0;
   }
+
+
+  body {
+    font: .85em/1.4 "微软雅黑", "Microsoft Yahei", 'Arial', 'san-serif';
+    color: #666;
+    margin: 0;
+    padding: 0;
+    background: #0BE093;
+    font-family: 'Open Sans', sans-serif;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle
+  }
+  a, button, input {
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0)
+  }
+  input {
+    border: 0 none;
+    -webkit-appearance: none
+  }
+  ul, p {
+    padding: 0;
+    margin: 0
+  }
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 100;
+    color: #fff;
+  }
+  ul, li {
+    list-style: none
+  }
+  a {
+    color: #666
+  }
+  a, a:hover {
+    text-decoration: none
+  }
+  a:focus {
+    outline: none
+  }
+  .animated {
+    -webkit-animation-duration: 1.4s;
+    animation-duration: 1.4s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+  }
+  @-webkit-keyframes submitBt {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(-2000px);
+      transform: translateY(-2000px);
+    }
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(30px);
+      transform: translateY(30px);
+    }
+    80% {
+      -webkit-transform: translateY(-10px);
+      transform: translateY(-10px);
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+    }
+  }
+  @keyframes submitBt {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(-2000px);
+      -ms-transform: translateY(-2000px);
+      transform: translateY(-2000px);
+    }
+    60% {
+      opacity: 1;
+      -webkit-transform: translateY(30px);
+      -ms-transform: translateY(30px);
+      transform: translateY(30px);
+    }
+    80% {
+      -webkit-transform: translateY(-10px);
+      -ms-transform: translateY(-10px);
+      transform: translateY(-10px);
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+      transform: translateY(0);
+    }
+  }
+  .submitBt {
+    -webkit-animation-name: submitBt;
+    animation-name: submitBt;
+  }
+  /*------------------- 华丽分割线 -----------------------*/
+
+  .timeTable{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: solid 1px black;
+    background-color: #ffffff;
+  }
+  .timeTable th{
+    width: 10%;
+    text-align: center;
+    border: solid 1px #ffffff;
+  }
+  .timeTable td{
+    border: solid 1px #ffffff;
+  }
+  .date1{
+    background-color: #5F9EA0;
+  }
+  .bookbut{
+
+    background-color: #5F9EA0;
+  }
+
+  #dialogBg {
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: .8;
+    filter: alpha(opacity=60);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: none;
+  }
+  #dialog {
+    width: 500px;
+    height: 400px;
+    margin: 0 auto;
+    display: none;
+    background-color: #ffffff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -120px 0 0 -150px;
+    z-index: 10000;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .dialogTop {
+    width: 90%;
+    margin: 0 auto;
+    border-bottom: 1px dotted #ccc;
+    letter-spacing: 1px;
+    padding: 10px 0;
+    text-align: right;
+  }
+  .dialogIco {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    margin-left: -25px;
+  }
+
+  .ysubmit {
+    margin: 0 auto;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    font-family: "微软雅黑", "microsoft yahei";
+    cursor: pointer;
+    margin-top: 10px;
+    display: inline-block;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    text-align: center;
+    background-color: #428bca;
+    color: #fff;
+    box-shadow: 0 -3px 0 #2a6496 inset;
+    -webkit-box-shadow: 0 -3px 0 #2a6496 inset;
+  }
+
+
 
 </style>

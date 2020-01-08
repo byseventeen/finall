@@ -99,7 +99,7 @@
             <div id="getusername" class="userinfo">用户名：{{username}}</div>
             <div id="usernumber" class="userinfo">证件号：{{card_id}}</div>
             <div id="userpay" class="userinfo">预约未支付记录 <a href="#">0</a> 条</div>
-            <div id="usergone" class="userinfo">预约成功未就诊记录 <a href="#">0</a> 条</div>
+            <div id="usergone" class="userinfo">预约成功未就诊记录 <a href="#">1</a> 条</div>
             <button type="submit" class="btn btn-default info-btn">退出</button>
           </div>
         </div>
@@ -204,7 +204,6 @@
                 document.getElementById("inputcode").value = "";//清空文本框
               }
               else { //输入正确时
-                alert("Right");
 
                 var data={
                    inputusername : this.formMess.inputusername,
