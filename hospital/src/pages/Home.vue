@@ -8,7 +8,7 @@
             <el-header>
               <mynav></mynav>
             </el-header>
-            <el-container>
+            <el-container class="middle">
               <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16" class="el-col">
                 <Carousel></Carousel>
               </el-col>
@@ -58,22 +58,13 @@
     line-height: 60px;
     padding: 0 !important;;
   }
-
-  .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
-    text-align: center;
-    line-height: 200px;
-  }
-
-  .el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-  }
-
   body > .el-container {
     margin-bottom: 40px;
+  }
+  Carousel{
+    height: 500px;
+  }
+  .middle{
+    margin-top: 10px;
   }
 </style>
