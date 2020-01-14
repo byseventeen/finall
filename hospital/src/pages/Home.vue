@@ -12,7 +12,7 @@
               <el-col :xs="16" :sm="16" :md="16" :lg="16" :xl="16" class="el-col">
                 <Carousel></Carousel>
               </el-col>
-              <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="el-col">
+              <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" class="el-col login">
                 <login-form></login-form>
               </el-col>
             </el-container>
@@ -66,5 +66,8 @@
   }
   .middle{
     margin-top: 10px;
+  }
+  .login{
+    background-color: #e3ded9;
   }
 </style>
