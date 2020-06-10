@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -23,11 +23,11 @@
 <div id="wrapper">
     <div id="menu"></div>
     <div id="page-wrapper" >
-        <h1 class="page-header">医生管理<small>医生信息管理</small></h1>
+        <h1 class="page-header">意见管理<small>意见信息管理</small></h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
-            <li class="active"><a href="#"><i class='fa'>医生管理</i></a></li>
-            <li class="active"><i class='fa'>医生信息管理</i></li>
+            <li class="active"><a href="#"><i class='fa'>意见管理</i></a></li>
+            <li class="active"><i class='fa'>意见信息管理</i></li>
         </ol>
         <div id="page-inner">
             <div class="row">
@@ -35,26 +35,18 @@
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            医生信息管理
+                            意见信息管理
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <a href="doctorAdd.html"><button class="btn btn-success">添加医生</button></a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                     <tr>
-                                        <th>医生编号</th>
-                                        <th>医生姓名</th>
-                                        <th>性别</th>
-                                        <th>手机</th>
-                                        <th>证件号码</th>
-                                        <th>职称</th>
-                                        <th>所属门诊</th>
-                                        <th>所属科室</th>
-                                        <th>个人简介</th>
-                                        <th>操作</th>
+                                        <th>意见编号</th>
+                                        <th>意见类型</th>
+                                        <th>意见内容</th>
                                     </tr>
                                     </thead>
                                     <tbody id="oddbody">
@@ -62,12 +54,7 @@
                                         <td class="center">001</td>
                                         <td class="center">李明</td>
                                         <td class="center">男</td>
-                                        <td class="center">12345678901</td>
-                                        <td class="center">11@11.com</td>
-                                        <td class="center">
-                                            <a href="doctorModify.html"><button class="btn btn-primary"><i class="fa fa-edit "></i> 修改</button></a>
-                                            <button class="btn btn-danger"><i class="fa fa-pencil"></i> 删除</button>
-                                        </td>
+
                                     </tr>
                                     </tbody>
                                 </table>
@@ -98,15 +85,12 @@
 <script>
     $(document).ready(function () {
         $('#dataTables-example').dataTable({
-            // 是否开启本地分页
-            "bAutoWidth":false,
-            "processing":true,
-            "searching":true,
-            "async":true,
-            "bLengthChange":true,
-            "paging":true,
-            "Filter":true,
-            "ajax": "/doctor/findAllDoctors.action",
+            "process": true,
+            "searching": true,
+            "serviceSide": true,
+            "destroy": true,
+            "retrieve":true,
+            "ajax": "/advice/findAllAdvice.action",
 
             "language": {
                 "sProcessing": "处理中...",
@@ -135,36 +119,21 @@
             },
 
             "columns": [
-                { "data": "doctorid" },
-                { "data": "dname" },
-                { "data": "gender" },
-                { "data": "phone" },
-                { "data": "cardId" },
-                { "data": "titlename" },
-                { "data": "departmentname" },
-                { "data": "departypementname" },
-                { "data": "profile" },
-                {"sDefaultContent": "",
-                    data:"doctorid",
-                    "render": function (data) {
-                        var id=data;
-                        return "<td class=\"center\">" + "<a href=\"doctorModify.html?doctorid="+id+"\">"+"<button class=\"btn btn-primary\"><i class=\"fa fa-edit\">修改</i></button>"+"</a>"
-                            + "<button class=\"btn btn-danger\" onclick=\"getindex("+id+")\"><i class=\"fa fa-pencil\"></i> 删除</button>"
-                            +"</td>";
-                    }
-                }
+                { "data": "id" },
+                { "data": "adviceType" },
+                { "data": "advice" },
             ]
 
         });
 
     });
-    function getindex(doctorid){
+    function getindex(userid){
 
         $.ajax({
-            url:'/doctor/deleteDoctor.action',
+            url:'/deleteUser.action',
             async:false,
             data:{
-                doctorid:doctorid
+                userid:userid
             },
             type:'get',
             success:function(msg){

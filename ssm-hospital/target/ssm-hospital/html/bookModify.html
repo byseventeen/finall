@@ -1,10 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <!-- Bootstrap Styles-->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="../assets/css/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <!-- TABLE STYLES-->
+    <link href="../assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 </head>
 <body>
+<div id="wrapper">
+    <div id="menu"></div>
 
+    <div id="page-wrapper" >
+        <h1 class="page-header">预约信息管理<small>修改预约信息</small></h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active"><a href="#"><i class='fa'>预约信息管理</i></a></li>
+            <li class="active"><i class='fa'>修改预约信息</i></li>
+        </ol>
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            修改预约信息
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group  ">
+                                        <label>预约编号</label>
+                                        <span id="userid"></span>
+                                    </div>
+                                    <div class="form-group  ">
+                                        <label>用户姓名</label>
+                                        <input class="form-control" placeholder="请输入用户名字" name="course" id="username">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>性别</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="sex" id="sex-1" value="男" checked="">男
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="sex" id="sex-2" value="女">女
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>手机</label>
+                                        <input class="form-control" placeholder="请输入手机号码" name="class" id="phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>证件号码</label>
+                                        <input class="form-control" name="address" id="card_id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>预约医生</label>
+                                        <input class="form-control" placeholder="请输入证件号码" name="address" id="dName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>预约门诊</label>
+                                        <input class="form-control" placeholder="请输入预约门诊" name="address" id="department">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>预约科室</label>
+                                        <input class="form-control" placeholder="请输入预约科室" name="address" id="departmentType">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>预约日期</label>
+                                        <input class="form-control" placeholder="请输入预约日期" name="address" id="arrangeDate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>预约时段</label>
+                                        <input class="form-control" placeholder="请输入预约时段" name="address" id="arrangeTime">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>预约状态</label>
+                                        <input class="form-control" placeholder="请输入预约状态" name="address" id="bookState">
+                                    </div>
+                                    <input type="submit" class="btn btn-success" id="btnsubmit" value="提交">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /. PAGE WRAPPER  -->
+            </div>
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="../assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="../assets/js/jquery.metisMenu.js"></script>
+    <!-- Custom Js -->
+    <!-- DATA TABLE SCRIPTS -->
+    <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
+    <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+
+            function getUrlSearch(name) {
+                // 未传参，返回空
+                if (!name) return null;
+                // 查询参数：先通过search取值，如果取不到就通过hash来取
+                var after = window.location.search;
+                after = after.substr(1) || window.location.hash.split('?')[1];
+                // 地址栏URL没有查询参数，返回空
+                if (!after) return null;
+                // 如果查询参数中没有"name"，返回空
+                if (after.indexOf(name) === -1) return null;
+                var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+                // 当地址栏参数存在中文时，需要解码，不然会乱码
+                var r = decodeURI(after).match(reg);
+                // 如果url中"name"没有值，返回空
+                if (!r) return null;
+                return r[2];
+            }
+            var id=getUrlSearch("userid");
+
+            $.ajax({
+                url:'/findOneUser.action',
+                async:false,
+                data:{
+                    userid:id
+                },
+                type:'get',
+                success:function(findList){
+                    $("#username").val(findList[0].username);
+                    $("input[name='sex'][value="+findList[0].gender+"]").attr("checked",true);
+                    $("#phone").val(findList[0].phone);
+                    $("#card_id").val(findList[0].cardId);
+                },
+                error:function (err){
+                    alert(err);
+                }
+            });
+            console.log($("#username").val())
+
+            $('#btnsubmit').click(function (){
+                console.log(id);
+                $.ajax({
+                    url:'/updateUser.action',
+                    async:false,
+                    data:{
+                        userid: id,
+                        username:$("#username").val(),
+                        gender: $('input[type=radio][name=sex]:checked').val(),
+                        phone:$("#phone").val(),
+                        cardId:$("#card_id").val()
+                    },
+                    type:'post',
+                    success:function(msg){
+                        alert("修改成功！")
+                    },
+                    error:function (err){
+                        alert(err);
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+
+<script src="../assets/js/custom-scripts.js"></script>
+<script>
+    $("#menu").load("menu.html",function () {
+        var sc = document.createElement("script");
+        sc.src = "../assets/js/bootstrap.min.js";
+        $("body").append(sc);
+    });
+
+    $(".border").click(function () {
+        if ($(this).hasClass("bgcolor")) {
+            $(this).removeClass("bgcolor");
+        }else{
+            $(this).addClass("bgcolor");
+        }
+    })
+    $("#all").click(function () {
+        if ( $(".border").hasClass("bgcolor")){
+            $(".border").removeClass("bgcolor");
+        }else{
+            $(".border").addClass("bgcolor");
+        }
+    })
+
+</script>
 </body>
 </html>
