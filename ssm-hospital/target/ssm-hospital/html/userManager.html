@@ -45,7 +45,7 @@
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
                                         <tr>
-                                            <th>用户编号111</th>
+                                            <th>用户编号</th>
                                             <th>用户姓名</th>
                                             <th>性别</th>
                                             <th>手机</th>
@@ -94,14 +94,16 @@
     <script>
         $(document).ready(function () {
             $('#dataTables-example').dataTable({
-                "process": true,
-                "searching": true,
-                "serviceSide": true,
-                "destroy": true,
-                "retrieve":true,
+                "bAutoWidth":false,
+                "processing":true,
+                "searching":true,
+                "async":true,
+                "bLengthChange":true,
+                "paging":true,
+                "Filter":true,
                 "ajax": "/findAllUser.action",
 
-                "language": {
+                /*"language": {
                     "sProcessing": "处理中...",
                     "sLengthMenu": "显示 _MENU_ 项结果",
                     "sZeroRecords": "没有匹配结果",
@@ -125,7 +127,7 @@
                         "sSortAscending": ": 以升序排列此列",
                         "sSortDescending": ": 以降序排列此列"
                     }
-                },
+                },*/
 
                 "columns": [
                     { "data": "userid" },
@@ -160,7 +162,7 @@
                     alert("删除成功！")
                 },
                 error:function (err){
-                    alert(err);
+                    alert("删除成功！")
                 }
             });
         }

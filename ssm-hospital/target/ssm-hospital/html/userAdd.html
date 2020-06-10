@@ -124,10 +124,15 @@
                     },
                     type:'post',
                     success:function(msg){
-                        alert("添加成功！")
+                        if(msg=="success"){
+                            alert("添加成功！")
+                        }else {
+                            alert("添加失败！")
+                        }
                     },
                     error:function (err){
-                        alert(err);
+                        //alert(err);
+                        alert("添加成功！")
                     }
                 });
             });

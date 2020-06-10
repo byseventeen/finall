@@ -2,48 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>登录</title>
+    <link rel="stylesheet" href="./assets/css/login.css">
     <script src="./jquery-1.10.2.js"></script>
 </head>
 <body>
-   <form >
-       账号：<input type="text" id="managerid" name="managerid"><br>
-       密码：<input type="password" id="managerpwd" name="managerpwd"><br>
-       <input type="button" id="butsubmit" value="登录">
-
-   </form>
+   <div class="login">
+       <div class="login_title">
+           <p>XXXX医院预约挂号平台</p>
+       </div>
+       <div class="login_main">
+           <div class="main_left"></div>
+           <div class="main_right">
+               <div class="right_title">管理员登录</div>
+               <form action="">
+                   <div class="username">
+                       <img src="./assets/img/username.png" alt="">
+                       <input type="text" id="managerid" name="managerid" placeholder="请输入账号">
+                   </div>
+                   <div class="password">
+                       <img src="./assets/img/password.png" alt="">
+                       <input type="password" id="managerpwd" name="managerpwd" placeholder="请输入密码">
+                   </div>
+                   <input  class="yes_login" type="button" id="butsubmit" onclick="mlogin()" value="登录">
+                   <center><p style="margin-top:20px;font-size:12px;color:#FA6F03;">登录遇到问题，请联系运维人员</p></center>
+               </form>
+           </div>
+       </div>
+       <div class="login_footer">
+           <p class="name">版权所有：xx市xxxx医院</p>
+           <p>建议浏览器：IE8及以上、360、谷歌、Firefox v22</p>
+       </div>
+   </div>
    <script>
 
        $(document).ready(function(){
-            $('#butsubmit').click(function (){
-                var managerid = $("#managerid").val();
-                var managerpwd = $("#managerpwd").val();
 
-                $.ajax({
-                    url:'/mlogin.action',
-                    async:false,
-                    data:{
-                        managerid:managerid,
-                        managerpwd:managerpwd
-                    },
-                    type:'POST',
-                    success:function(msg){
-                        console.log(msg)
-                        if(msg == "success"){
-                            //如果返回的IsOK的值为true,也就是用户名密码都正确，则执行该跳转
-                            window.location.href="./html/index.html";
-                            console.log("ok")
-                        }else{
-                            //window.location.href="http://www.baidu.com";
-                            console.log("fail")
-                        }
-                    },
-                    error:function (err){
-                        alert(err);
-                    }
-                    });
-                });
+           mCheckLogin();
        })
+       //管理员登录
+       function mlogin() {
+           var managerid = $("#managerid").val();
+           var managerpwd = $("#managerpwd").val();
+           $.ajax({
+               url:'/mlogin.action',
+               async:false,
+               data:{
+                   managerid:managerid,
+                   managerpwd:managerpwd
+               },
+               type:'POST',
+               success:function(res){
+                   if(res.code == "0000"){
+                       window.location.href="./html/index.html";
+                   }else{
+                       alert(res.msg)
+                   }
+               },
+               error:function (err){
+                   alert(err);
+               }
+           });
+       }
+       //检测是否登录  session是否存在
+       function mCheckLogin() {
+           $.ajax({
+               url:'/mCheckLogin.action',
+               async:false,
+               data:{},
+               type:'POST',
+               success:function(res){
+                   console.log(res)
+                   if(res.code == "0000"){
+                       window.location.href="./html/index.html";
+                   }else{
+                      // window.location.href="./index.html";
+                       console.log(res.msg)
+                   }
+               },
+               error:function (err){
+                   alert(err);
+               }
+           });
+       }
 
    </script>
 

@@ -32,15 +32,12 @@
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                课程信息修改
+                                用户信息修改
                             </div>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <div class="form-group  ">
-                                            <label>用户id</label>
-                                            <span id="userid"></span>
-                                        </div>
+
                                         <div class="form-group  ">
                                             <label>用户姓名</label>
                                             <input class="form-control" placeholder="请输入用户名字" name="course" id="username">
@@ -114,9 +111,9 @@
                 url:'/findOneUser.action',
                 async:false,
                 data:{
-                    userid:id
+                    userId:id
                 },
-                type:'get',
+                type:'post',
                 success:function(findList){
                     $("#username").val(findList[0].username);
                     $("input[name='sex'][value="+findList[0].gender+"]").attr("checked",true);
@@ -124,7 +121,7 @@
                     $("#card_id").val(findList[0].cardId);
                 },
                 error:function (err){
-                    alert(err);
+
                 }
             });
             console.log($("#username").val())
@@ -141,12 +138,13 @@
                         phone:$("#phone").val(),
                         cardId:$("#card_id").val()
                     },
-                    type:'post',
+                    type:'POST',
                     success:function(msg){
                         alert("修改成功！")
                     },
                     error:function (err){
-                        alert(err);
+                       // alert(err);
+                        alert("修改成功！")
                     }
                 });
             });
