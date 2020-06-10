@@ -20,8 +20,6 @@ public class Book {
     private Integer arrangeId;
     @Column(name = "time_id")
     private Integer timeId;
-    @Column(name = "pay_state")
-    private String payState;
     @Column(name = "book_state")
     private String bookState;
     @Transient

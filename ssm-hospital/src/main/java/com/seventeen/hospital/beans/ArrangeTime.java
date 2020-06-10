@@ -4,9 +4,11 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Data
+@Table(name="arrangetime")
 public class ArrangeTime {
     @Id
     @Column(name = "id")
@@ -23,4 +25,6 @@ public class ArrangeTime {
     private Integer numAmount;
     @Column(name = "num_surplus")
     private Integer numSurplus;
+    @Column(name = "arrange_date")
+    private Date arrangeDate;
 }

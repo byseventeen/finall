@@ -1,35 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Header from '@/components/mheader'
-import Index from '@/components/index'
-import Book from '@/components/book'
-import Guide from '@/components/guide'
-import Person from '@/components/person'
-import Mynav from '@/components/mynav'
-import Menu from '@/components/menu'
-import Carousel from '@/components/Carousel'
-import LoginForm from '@/components/loginForm'
-import Code from '@/components/Code'
 
-import Home from '@/pages/home'
-import Forbook from '@/pages/forbook'
+import Header from '@/components/mheader'
+import LoginForm from '@/components/loginForm'
+import Index from '@/pages/index'
+import Book from '@/pages/book'
+import Person from '@/pages/person'
+import Guide from '@/pages/guide'
 import Login from '@/pages/login'
+import Sign from '@/pages/sign'
+import Test from '@/pages/test'
+import Cut from '@/pages/cut'
 
 
 
 Vue.use(Router)
-
-export default new Router({
+//路由匹配规则
+let router = new Router({
   routes: [
-  /* {
+   {
       path: '/',
-      name: 'index',
-      component: Index
-    },*/
+      name: 'test',
+      component: Test
+    },
     {
-      path: '/',
-      name: 'home',
-      component: Home
+      path:'/test',
+      name:'test',
+      component:Test
     },
     {
       path:'/index',
@@ -44,42 +41,26 @@ export default new Router({
     {
       path:'/book',
       name:'book',
-      component:Book
+      component:Book,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/guide',
       name:'guide',
-      component:Guide
+      component:Guide,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/person',
       name:'person',
-      component:Person
-    },
-    {
-      path:'/mynav',
-      name:'mynav',
-      component:Mynav
-    },
-    {
-      path:'/home',
-      name:'home',
-      component:Home
-    },
-    {
-      path:'/menu',
-      name:'menu',
-      component:Menu
-    },
-    {
-      path:'/forbook',
-      name:'forbook',
-      component:Forbook
-    },
-    {
-      path:'/Carousel',
-      name:'Carousel',
-      component:Carousel
+      component:Person,
+      meta:{
+        requireAuth:true
+      }
     },
     {
       path:'/login',
@@ -87,14 +68,34 @@ export default new Router({
       component:Login
     },
     {
+      path:'/sign',
+      name:'sign',
+      component:Sign
+    },
+    {
       path:'/loginForm',
       name:'loginForm',
       component:LoginForm
-    },
-    {
-      path:'/Code',
-      name:'Code',
-      component:Code
     }
   ]
 })
+
+//全局路由守卫
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) { // 判断页面是否需要登录验证
+    // 判断是否登录
+    if (sessionStorage.getItem("userToken")=="true") {
+      console.log("已登录")
+      next()
+    } else {
+      alert("请先登录！")
+      next({
+        name: 'index'
+      });
+    }
+  } else {
+    next()
+  }
+})
+
+export default router

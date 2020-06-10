@@ -90,7 +90,7 @@ public class DepartmentController {
         return departmentList;
     }
 
-    //多对一。门诊多，门诊类型一，传一个门诊id过来，根据id找到门诊和科室信息
+    //多对一。门诊多，科室一，传一个门诊id过来，根据id找到门诊和科室信息
     @ResponseBody
     @CrossOrigin
     @RequestMapping(path = "/findDepartmentById.action")

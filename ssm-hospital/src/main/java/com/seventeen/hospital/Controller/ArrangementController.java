@@ -1,8 +1,10 @@
 package com.seventeen.hospital.Controller;
 
+import com.seventeen.hospital.Service.IArrangeTimeService;
 import com.seventeen.hospital.Service.IArrangementService;
 import com.seventeen.hospital.Service.IDepartmentService;
 import com.seventeen.hospital.Service.IDoctorService;
+import com.seventeen.hospital.beans.ArrangeTime;
 import com.seventeen.hospital.beans.Arrangement;
 import com.seventeen.hospital.beans.Department;
 import com.seventeen.hospital.beans.Doctor;
@@ -26,6 +28,9 @@ public class ArrangementController {
 
     @Resource(name = "arrangementService")
     private IArrangementService arrangementService;
+
+    @Resource(name = "arrangeTimeService")
+    private IArrangeTimeService arrangeTimeService;
 
     @Resource(name="doctorService")
     private IDoctorService doctorService;
@@ -69,13 +74,13 @@ public class ArrangementController {
         Date startDate = simpleDateFormatt.parse(checkedDate);
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
-        c.add(Calendar.DAY_OF_MONTH, 7);
+        c.add(Calendar.DAY_OF_MONTH, 8);
         Date t=c.getTime();
         String stopDate = simpleDateFormatt.format(t);
         //根据did 和dDate找到医生排班信息
         List<Arrangement> findlist=arrangementService.findArrangementbycIddDate(did,checkedDate,stopDate);
         Map TopFloorMap=new HashMap();
-        TopFloorMap.put("departmentName","内科");
+        //TopFloorMap.put("departmentName","内科");
         TopFloorMap.put("doctorName",dname);
         TopFloorMap.put("doctorCardId",cardId);
         TopFloorMap.put("startDate",checkedDate);
@@ -99,14 +104,17 @@ public class ArrangementController {
     @CrossOrigin
     @RequestMapping(path = "/addArrangement.action",method= RequestMethod.POST )
     public Map addDoctorArrange(HttpServletRequest request) throws ParseException {
+        System.out.println("添加排班");
         String cardId= request.getParameter("cardId");
         String arrangeTime= request.getParameter("arrangeTime");
         String[] array=request.getParameterValues("arrangeDate[]");
+        Integer num= Integer.valueOf(request.getParameter("num"));
 
         //根据cardId锁定某个医生并且拿到信息
         Doctor doctor=new Doctor();
         doctor.setCardId(cardId);
         List<Doctor> dlist=doctorService.find(doctor);
+        Integer dcardId= Integer.valueOf(dlist.get(0).getCardId());
         Integer did=dlist.get(0).getDoctorid();
         String dname=dlist.get(0).getDname();
         Integer departmentId=dlist.get(0).getDepartmentId();
@@ -117,6 +125,7 @@ public class ArrangementController {
         String departmentName=departmentList.get(0).getDepartmentname();
 
         for (int i=0;i<array.length;i++){
+            //添加排班
             Arrangement arrangement=new Arrangement();
             arrangement.setDepartmentId(departmentId);
             arrangement.setDoctorId(did);
@@ -126,6 +135,38 @@ public class ArrangementController {
             Date date = simpleDateFormat.parse(dateString);
             arrangement.setArrangeDate(date);
             arrangementService.add(arrangement);
+            //更新号源表
+            System.out.println(arrangeTime);
+            if(arrangeTime.equals("上午")){
+                String startdata[] = {"08:00","09:00","10:00","11:00"};
+                String stopdata[] = {"09:00","10:00","11:00","12:00"};
+                for(int x=0;x<startdata.length;x++){
+                    ArrangeTime arrangeTimer=new ArrangeTime();
+                    arrangeTimer.setDCardId(dcardId);
+                    arrangeTimer.setArrangeDate(date);
+                    arrangeTimer.setArrangeTimeName(arrangeTime);
+                    arrangeTimer.setNumAmount(num);
+                    arrangeTimer.setNumSurplus(num);
+                    arrangeTimer.setStartTime(startdata[x]);
+                    arrangeTimer.setStopTime(stopdata[x]);
+                    arrangeTimeService.add(arrangeTimer);
+                }
+            }
+            if(arrangeTime.equals("下午")){
+                String startdata[] = {"13:00","14:00","15:00","16:00"};
+                String stopdata[] = {"14:00","15:00","16:00","17:00"};
+                for(int x=0;x<startdata.length;x++){
+                    ArrangeTime arrangeTimer=new ArrangeTime();
+                    arrangeTimer.setDCardId(dcardId);
+                    arrangeTimer.setArrangeDate(date);
+                    arrangeTimer.setArrangeTimeName(arrangeTime);
+                    arrangeTimer.setNumAmount(num);
+                    arrangeTimer.setNumSurplus(num);
+                    arrangeTimer.setStartTime(startdata[x]);
+                    arrangeTimer.setStopTime(stopdata[x]);
+                    arrangeTimeService.add(arrangeTimer);
+                }
+            }
         }
         Map TopFloorMap=new HashMap();
         TopFloorMap.put("departmentName",departmentName);

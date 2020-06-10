@@ -14,11 +14,8 @@ public class UserServiceImpl extends CommonServiceImpl<User> implements IUserSer
     @Autowired
     private UserMapper userMapper;
 
-
     @Override
     protected Mapper getMapper() {
         return this.userMapper;
     }
-
-
 }

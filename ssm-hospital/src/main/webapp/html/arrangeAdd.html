@@ -83,6 +83,12 @@
                                             </select>
                                         </div>
                                         <br>
+                                        <div class="form-inline">
+                                            <label>号&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp源</label>
+                                            <input class="form-control" id="num" placeholder="请输入号源个数" name="num">
+
+                                        </div>
+                                        <br>
                                         <div class=" form-inline">
                                             <button class="btn btn-submit">添加</button>
                                         </div>
@@ -219,12 +225,14 @@
                         cardId: $("#card-id").val(),
                         doctorName:$("#doctor-name").val(),
                         arrangeTime:$("#arrange-time").val(),
-                        arrangeDate:arr
+                        arrangeDate:arr,
+                        num:$("#num").val()
                     },
                     type:'post',
                     success:function(TopFloorMap){
                         $("#department").val(TopFloorMap.departmentName);
                         $("#doctorName").val(TopFloorMap.doctorName);
+                        alert("添加成功！")
                     },
                     error:function (err){
                         alert(err);

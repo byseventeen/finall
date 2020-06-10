@@ -14,16 +14,28 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <!-- TABLE STYLES-->
     <link href="../assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/layui/css/layui.css">
+    <script src="../assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
 
+    <!-- Custom Js -->
+    <!-- DATA TABLE SCRIPTS -->
+    <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
+    <script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
     <style>
         .btn-primary{margin-right: 10px;}
+        .layui-form-label{
+            width: 120px;
+        }
     </style>
 </head>
 <body>
 <div id="wrapper">
     <div id="menu"></div>
     <div id="page-wrapper" >
-        <h1 class="page-header">预约管理11111<small>预约信息管理</small></h1>
+        <h1 class="page-header">预约管理<small>预约信息管理</small></h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
             <li class="active"><a href="#"><i class='fa'>预约管理</i></a></li>
@@ -39,7 +51,41 @@
                         </div>
                         <div class="panel-body">
                             <div class="form-group">
-                                <a href="doctorAdd.html"><button class="btn btn-success">添加预约</button></a>
+                                <a href="bookAdd.html"><button class="btn btn-success">添加预约</button></a>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-md-3">
+                                        <div class=" form-inline">
+                                            <label>开始日期：</label>
+                                            <input class="form-control demo-input" id="dDate" placeholder="请输入开始查询日期">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class=" form-inline">
+                                            <label>时间段：</label>
+                                            <input class="form-control" placeholder="请输入时间段开始时间" id="time">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class=" form-inline">
+                                            <label>科室选择：</label>
+                                            <select class="form-control" id="departmenttype">
+                                                <option value="">请选择查询科室</option>
+                                                <option value="1">内科</option>
+                                                <option value="2">外科</option>
+                                                <option value="3">妇产科</option>
+                                                <option value="4">生殖中心</option>
+                                                <option value="5">儿科</option>
+                                                <option value="6">五官科</option>
+                                                <option value="7">其他</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class=" form-inline">
+                                            <button class="btn btn-success" onclick="selectScop()">确认筛选</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -54,8 +100,9 @@
                                         <th>医生职称</th>
                                         <th>所属门诊</th>
                                         <th>所属科室</th>
-                                        <!--<th>预约日期</th>-->
-                                        <!--<th>预约时段</th>   -->
+                                        <th>预约日期</th>
+                                        <th>预约时段</th>
+                                        <th>预约状态</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -87,25 +134,35 @@
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
-<script src="../assets/js/jquery-1.10.2.js"></script>
-<!-- Bootstrap Js -->
-<script src="../assets/js/bootstrap.min.js"></script>
-<!-- Metis Menu Js -->
+
+<script src="../assets/layui/layui.js"></script>
+<!--<script src="../assets/layui/lay/modules/layer.js"></script>-->
 <script src="../assets/js/jquery.metisMenu.js"></script>
-<!-- Custom Js -->
-<!-- DATA TABLE SCRIPTS -->
-<script src="../assets/js/dataTables/jquery.dataTables.js"></script>
-<script src="../assets/js/dataTables/dataTables.bootstrap.js"></script>
+
 
 <script>
     $(document).ready(function () {
+       // window.url = "/Book/selectAllAppointment.action";
+        renderTable();
+        //layui日历插件
+        lay('#version').html('-v'+laydate.v),
+            laydate.render({
+                elem:'#dDate'
+            });
+
+    });
+    function renderTable(){
         $('#dataTables-example').dataTable({
-            "process": true,
-            "searching": true,
-            "serviceSide": true,
-            "destroy": true,
-            "retrieve":true,
-            "ajax": "/doctor/findAllDoctors.action",
+            // 是否开启本地分页
+            "bAutoWidth":false,
+            "processing":true,
+            "searching":true,
+            "async":true,
+            "bLengthChange":true,
+            "paging":true,
+            "Filter":true,
+            //"ajax": "/doctor/findAllDoctors.action",
+            "ajax": "/Book/selectAllAppointment.action",
 
             "language": {
                 "sProcessing": "处理中...",
@@ -134,20 +191,23 @@
             },
 
             "columns": [
-                { "data": "doctorid" },
-                { "data": "dname" },
+                { "data": "bookId" },
+                { "data": "userName" },
                 { "data": "gender" },
-                { "data": "phone" },
+                { "data": "userPhone" },
                 { "data": "cardId" },
-                { "data": "titlename" },
-                { "data": "departmentname" },
-                { "data": "departypementname" },
-                { "data": "profile" },
+                { "data": "dName" },
+                { "data": "title" },
+                { "data": "dDepartment" },
+                { "data": "dDepartTypeName" },
+                { "data": "arrangementDate" },
+                { "data": "Time"},
+                { "data": "bookState" },
                 {"sDefaultContent": "",
-                    data:"doctorid",
+                    data:"bookId",
                     "render": function (data) {
                         var id=data;
-                        return "<td class=\"center\">" + "<a href=\"doctorModify.html?doctorid="+id+"\">"+"<button class=\"btn btn-primary\"><i class=\"fa fa-edit\">修改</i></button>"+"</a>"
+                        return "<td class=\"center\">" +"<button class=\"btn btn-primary\" onclick=\"openLog("+id+")\"><i class=\"fa fa-edit\">修改</i></button>"
                             + "<button class=\"btn btn-danger\" onclick=\"getindex("+id+")\"><i class=\"fa fa-pencil\"></i> 删除</button>"
                             +"</td>";
                     }
@@ -155,15 +215,15 @@
             ]
 
         });
-
-    });
-    function getindex(doctorid){
+    }
+    //删除
+    function getindex(bookId){
 
         $.ajax({
-            url:'/doctor/deleteDoctor.action',
+            url:'/Book/deleteAppointment.action',
             async:false,
             data:{
-                doctorid:doctorid
+                bookId:bookId
             },
             type:'get',
             success:function(msg){
@@ -173,8 +233,140 @@
                 alert(err);
             }
         });
-    }
+    };
+    //修改预约状态
+    function openLog(bookId) {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.open({
+                title: '修改预约状态',type: 1,
+                btn: ['确定'],
+                content: '<div class="layui-form-item">' +
+                '<label class="layui-form-label">预约状态</label>' +
+                '<div class="layui-input-block">' +
+                '<select name="range" id="range" lay-filter="range">' +
+                '<option value="">请选择修改状态</option>' +
+                '<option value="end">已就诊</option>' +
+                '<option value="start">未就诊</option>' +
+                '<option value="break">已爽约</option>' +
+                '<option value="cancel">已取消</option>' +
+                '</select>' +
+                '</div>' +
+                '</div>',
+                yes: function(index, layero){
+                    layer.close();
+                //按钮【按钮一】的回调
+                    if ($("#range").val()) {
+                        var bookState=$("#range").val();
+                        $.ajax({
+                            url:'/Book/updateAppointment.action',
+                            async:false,
+                            data:{
+                                bookId:bookId,
+                                bookState:bookState
+                            },
+                            type:'POST',
+                            success:function(msg){
+                                layer.open({
+                                    title: '请选择修改状态',
+                                    content: '修改成功',
+                                    btn: ['确定'],
+                                    yes:function () {
+                                        layer.closeAll();
+                                        renderTable();
+                                    }
+                                });
+                            },
+                            error:function (err){
+                                alert(err);
+                            }
+                        });
+                    }
+                },
+                cancel: function(){
+                    layer.close();
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+            });
+        })
 
+    };
+    //筛选查询
+    function selectScop() {
+
+
+     $('#dataTables-example').dataTable({
+     "process": true,
+     "searching": true,
+     "serviceSide": true,
+     "destroy": true,
+     "retrieve":true,
+     "ajax": "/doctor/findAllDoctors.action",
+     /*"ajax": {//ajax请求后台
+         "url": "/departmenttype/findAllDepartmentById.action",
+         "type": "POST",
+         "data": function (d) {
+             time= $("#time").val();
+             departmenttype=$("#departmenttype").val();
+             dDate=$("#dDate").val();
+            /* d.pageNo = $("#myDatatable").DataTable().page();//获取当前页码
+             var key = $("#search").val();//获取搜索框关键字
+             d.extraSerach=key;//查询条件*/
+               /* }
+            },*/
+
+           "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                // 排序方式
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+
+            "columns": [
+                { "data": "bookId" },
+                { "data": "userName" },
+                { "data": "gender" },
+                { "data": "userPhone" },
+                { "data": "cardId" },
+                { "data": "dName" },
+                { "data": "title" },
+                { "data": "dDepartment" },
+                { "data": "dDepartTypeName" },
+                { "data": "arrangementDate" },
+                { "data": "Time"},
+                { "data": "bookState" },
+                {"sDefaultContent": "",
+                    data:"bookId",
+                    "render": function (data) {
+                        var id=data;
+                        return "<td class=\"center\">" +"<button class=\"btn btn-primary\" onclick=\"openLog("+id+")\"><i class=\"fa fa-edit\">修改</i></button>"
+                            + "<button class=\"btn btn-danger\" onclick=\"getindex("+id+")\"><i class=\"fa fa-pencil\"></i> 删除</button>"
+                            +"</td>";
+                    }
+                }
+            ]
+
+        });
+    }
 
 </script>
 <script src="../assets/js/custom-scripts.js"></script>

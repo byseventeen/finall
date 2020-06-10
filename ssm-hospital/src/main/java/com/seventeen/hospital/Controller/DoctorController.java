@@ -87,6 +87,8 @@ public class DoctorController {
                 secondFloorList.add(thirdFloorMap);
             }
             toMap.put("data",secondFloorList);
+            toMap.put("recordsFiltered",secondFloorList.size());
+            toMap.put("recordsTotal",secondFloorList.size());
         }
         return toMap;
     }
@@ -94,9 +96,8 @@ public class DoctorController {
     //通过id查询一个医生的所有信息，包括门诊信息，科室信息和职称信息等
     @ResponseBody
     @CrossOrigin
-    @RequestMapping(path = "/findOneDoctorById.action")
+    @RequestMapping(path = "/findOneDoctorById.action",method= RequestMethod.POST)
     public List<Doctor> findOneDoctorById(HttpServletRequest request){
-
         List secondFloorList=new ArrayList();
         Map<String,Object> toMap=new HashMap<>();
         int a,b;
@@ -226,9 +227,8 @@ public class DoctorController {
         doctor.setPassword(request.getParameter("inputpassword"));
         List<Doctor> loginMesg=doctorService.find(doctor);
         Doctor rtdoctor=new Doctor();
+        rtdoctor.setDoctorid(loginMesg.get(0).getDoctorid());
         rtdoctor.setDname(loginMesg.get(0).getDname());
-        System.out.println(loginMesg.get(0));
-        System.out.println(loginMesg.get(0).getDname());
         rtdoctor.setCardId(loginMesg.get(0).getCardId());
         if (loginMesg!=null){
             return rtdoctor;

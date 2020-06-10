@@ -98,11 +98,14 @@
 <script>
     $(document).ready(function () {
         $('#dataTables-example').dataTable({
-            "process": true,
-            "searching": true,
-            "serviceSide": true,
-            "destroy": true,
-            "retrieve":true,
+            // 是否开启本地分页
+            "bAutoWidth":false,
+            "processing":true,
+            "searching":true,
+            "async":true,
+            "bLengthChange":true,
+            "paging":true,
+            "Filter":true,
             "ajax": "/doctor/findAllDoctors.action",
 
             "language": {

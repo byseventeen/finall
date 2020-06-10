@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,5 +30,22 @@ public class ArrangeTimeServiceImpl extends CommonServiceImpl<ArrangeTime> imple
         hm.put("dCardId",dCardId);
         hm.put("arrangeTimeName",arrangeTimeName);
         return arrangeTimeMapper.selectAllBydCardId(hm);
+    }
+    //增加预约 修改号源 剩余号源-1 总号源不变
+    @Override
+    public String updateArrangementTime(Integer arrangeTimeId) {
+        return String.valueOf(arrangeTimeMapper.updateArrangementTime(arrangeTimeId));
+    }
+
+    /**
+     * 根据医生证件号码 预约日期  预约时段开始时间查找timelist
+     */
+    @Override
+    public List<ArrangeTime> selectAllByCIdDate(int dCardId, Date dDate, String time) {
+        HashMap<String,Object> hm = new HashMap<>();
+        hm.put("dCardId",dCardId);
+        hm.put("dDate",dDate);
+        hm.put("time",time);
+        return arrangeTimeMapper.selectAllByCIdDate(hm);
     }
 }
