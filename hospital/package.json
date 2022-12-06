@@ -20,7 +20,7 @@
     "jquery": "^3.4.1",
     "mockjs": "^1.0.1-beta3",
     "popper.js": "^1.15.0",
-    "qs": "^6.9.0",
+    "qs": "^6.7.3",
     "vant": "^2.2.10",
     "viewport-units-buggyfill": "^0.6.2",
     "vue": "^2.5.2",
